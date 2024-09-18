@@ -18,7 +18,7 @@ export default function App() {
           name="Home"
           component={Home}
           options={{
-            title: "صفحه نخست",
+            title: "",
             drawerLabel: "صفحه نخست",
             drawerContentStyle: {
               backgroundColor: "#fff",

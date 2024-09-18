@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Button } from "react-native";
 const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>صفحه نخست</Text>
+      <Text style={styles.text}>خوش آمدید</Text>
     </View>
   );
 };
