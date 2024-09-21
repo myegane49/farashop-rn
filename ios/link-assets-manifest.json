@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/icons/Font Awesome 6 Brands Regular.ttf",
+      "sha1": "7ce89c71d5a51ac65b159c71422783dd86529c66"
+    },
+    {
+      "path": "assets/icons/Font Awesome 6 Free Regular.ttf",
+      "sha1": "775e2ecfc18d22b177274453d4c014ca6be63208"
+    },
+    {
+      "path": "assets/icons/Font Awesome 6 Free Solid.ttf",
+      "sha1": "2b8e11389d98122399667cf64941eb58497dc128"
+    },
+    {
+      "path": "assets/icons/Font Awesome v4 Compatibility Regular.ttf",
+      "sha1": "bd27e43f3d1e5019faaabc9ec6c5d3d7c5f100ef"
+    }
+  ]
+}

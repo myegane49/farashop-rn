@@ -1,8 +1,11 @@
 import { View, Text, StyleSheet } from "react-native";
 
-const Cart = () => {
+import MainHeader from "../headers/MainHeader";
+
+const Cart = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <MainHeader navigation={navigation} />
       <Text style={styles.text}>سبد خرید</Text>
     </View>
   );
@@ -14,7 +17,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
   text: {
     fontSize: 24,
