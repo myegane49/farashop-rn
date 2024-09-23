@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, Button } from "react-native";
 
 import MainHeader from "../headers/MainHeader";
+import ImageSlider from "../slider/ImageSlider";
 
 const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <MainHeader navigation={navigation} />
-      <Text style={styles.text}>خوش آمدید</Text>
+      <ImageSlider />
     </View>
   );
 };
