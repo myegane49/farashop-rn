@@ -17,7 +17,10 @@ export default function App() {
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Home" screenOptions={({ navigation }) => ({
           drawerPosition: 'right',
-          headerShown: false
+          headerShown: false,
+          sceneContainerStyle: {
+            backgroundColor: "#ebebeb"
+          }
           // headerStyle: {
           //   backgroundColor: '#f54120',
           //   height: 70

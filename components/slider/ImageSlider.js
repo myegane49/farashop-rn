@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Image, Dimensions, StyleSheet } from 'react-native';
+import { View, Image, Dimensions, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 
 import Pagination from './Pagination';
 
 const carouselHeight = 250
+const screenWidth = Dimensions.get('window').width;
 
 const ImageSlider = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -22,12 +23,16 @@ const ImageSlider = () => {
         width={width}
         data={data}
         height={carouselHeight}
+        autoPlay={true}
+        autoPlayInterval={3000}
         onSnapToItem={index => {
           setActiveIndex(index)
         }}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
-            <Image source={item.imgSrc } style={styles.image} />
+            <TouchableOpacity onPress={() => Alert.alert('slide')}>
+              <Image source={item.imgSrc } style={styles.image} />
+            </TouchableOpacity>
           </View>
         )}
       />
@@ -46,7 +51,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: '100%',
+    width: screenWidth,
     height: carouselHeight
   },
 });

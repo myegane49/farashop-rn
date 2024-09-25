@@ -1,0 +1,6 @@
+[
+  {"title": "کابل شبکه cat6 سه متری v-net", "imgSrc": "../../assets/images/prods/prod1.jpg", "price": 62500, "status": "active"},
+  {"title": "دانگل بلوتوث ماشین برند BUKU مدل RE-002", "imgSrc": "../../assets/images/prods/prod2.jpg", "price": 92200, "status": "active"},
+  {"title": "کیف لپتاپ اداری مدل LB14", "imgSrc": "../../assets/images/prods/prod3.jpg", "price": 31000, "status": "finished"},
+  {"title": "کیف دوشی SB 28 قهوه ای", "imgSrc": "../../assets/images/prods/prod4.jpg", "price": 42400, "status": "finished"}
+]
