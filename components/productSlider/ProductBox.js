@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 
 const ProductBox = ({title, imgSrc, price, status}) => {
+
   return (
     <View style={styles.card}>
-      <Image source={imgSrc ? require(imgSrc) : require('../../assets/images/prods/nopic.webp')} style={styles.image} resizeMode="contain" />
+      <Image source={imgSrc ? {uri: imgSrc} : require("../../assets/images/nopic.webp")} style={styles.image} resizeMode="contain" />
       <Text style={styles.title}>{title}</Text>
       <View style={styles.cardFooter}>
         <TouchableOpacity onPress={() => Alert.alert('افزوده شد!')}>
@@ -17,8 +18,6 @@ const ProductBox = ({title, imgSrc, price, status}) => {
     </View>
   );
 };
-
-export default ProductBox;
 
 const styles = StyleSheet.create({
   card: {
@@ -37,7 +36,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 8
   },
   image: {
-    height: "45%"
+    height: "45%",
+    width: '100%',
   },
   title: {
     color: "black",
@@ -65,3 +65,5 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 });
+
+export default ProductBox;

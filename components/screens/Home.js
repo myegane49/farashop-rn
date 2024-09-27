@@ -1,32 +1,37 @@
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet, Image } from "react-native";
 
 import MainHeader from "../headers/MainHeader";
 import ImageSlider from "../slider/ImageSlider";
 import Buttons from "../Buttons";
 import ProductSlider from "../productSlider/ProductSlider";
+import Banner from "../Banner";
+import Gallery from "../Gallery";
 
 const Home = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <MainHeader navigation={navigation} />
-      <ImageSlider navigation={navigation} />
-      <Buttons />
-      <ProductSlider />
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.container}>
+          <MainHeader navigation={navigation} />
+          <ImageSlider navigation={navigation} />
+          <Buttons />
+          <ProductSlider title="جدیدترین ها" />
+          <Banner imgSrc={require('../../assets/images/banner.jpg')} link="" />
+          <Gallery />
+          <Banner imgSrc={require('../../assets/images/banner2.jpg')} link="" />
+          <ProductSlider title="انواع کیف" />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
-
-export default Home;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
-  },
+  }
 });
+
+export default Home;

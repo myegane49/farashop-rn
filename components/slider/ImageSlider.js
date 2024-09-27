@@ -12,7 +12,7 @@ const ImageSlider = () => {
   const width = Dimensions.get('window').width;
 
   const data = [
-    { imgSrc: require('../../assets/images/slide1.png') },
+    { imgSrc: require('../../assets/images/slide1.jpg') },
     { imgSrc: require('../../assets/images/slide2.jpg') },
     { imgSrc: require('../../assets/images/slide3.jpg') },
   ];
@@ -23,8 +23,8 @@ const ImageSlider = () => {
         width={width}
         data={data}
         height={carouselHeight}
-        autoPlay={true}
-        autoPlayInterval={3000}
+        autoPlay={false}
+        autoPlayInterval={4000}
         onSnapToItem={index => {
           setActiveIndex(index)
         }}
