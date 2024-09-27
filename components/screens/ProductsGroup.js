@@ -2,16 +2,14 @@ import { View, Text, StyleSheet } from "react-native";
 
 import MainHeader from "../headers/MainHeader";
 
-const Cart = ({ navigation }) => {
+const ProductGroup = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <MainHeader navigation={navigation} />
-      <Text style={styles.text}>سبد خرید</Text>
+      <Text style={styles.text}>دسته بندی محصولات</Text>
     </View>
   );
 };
-
-export default Cart;
 
 const styles = StyleSheet.create({
   container: {
@@ -25,3 +23,5 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 });
+
+export default ProductGroup;

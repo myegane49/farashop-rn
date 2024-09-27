@@ -14,6 +14,7 @@ const Buttons = () => {
     <View style={styles.container}>
       <FlatList
         data={btnList}
+        inverted={true}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity style={styles.btn}>
