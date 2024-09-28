@@ -46,44 +46,43 @@ export default function App() {
             //   return null
             // }
         })}>
-          <Drawer.Screen name="Home" component={Home} options={{
-              title: "",
-              drawerLabel: () => <Text style={styles.label}>خانه</Text>,
-              drawerIcon: () => <Text style={styles.icon}>&#xf015;</Text>
-            }}
+          <Drawer.Screen name="Auth" component={() => <Text style={{color: '#000'}}>Auth</Text>} />
+          <Drawer.Screen name="Home" component={Home} />
+          <Drawer.Screen name="ProductGroup" component={ProductGroup}
+            // options={{
+            //   title: "",
+            //   drawerLabel: () => <Text style={styles.label}>دسته بندی محصولات</Text>,
+            //   drawerIcon: () => <Text style={styles.icon}>&#xf0ca;</Text>,
+            //   drawerItemStyle: {
+            //     borderBottomWidth: 1,
+            //     borderBottomColor: '#eee',
+            //     marginHorizontal: 0,
+            //   }
+            // }}
           />
-          <Drawer.Screen name="ProductGroup" component={ProductGroup} options={{
-              title: "",
-              drawerLabel: () => <Text style={styles.label}>دسته بندی محصولات</Text>,
-              drawerIcon: () => <Text style={styles.icon}>&#xf0ca;</Text>,
-              drawerItemStyle: {
-                borderBottomWidth: 1,
-                borderBottomColor: '#eee',
-                marginHorizontal: 0,
-              }
-            }}
-          />
-          <Drawer.Screen name="Cart" component={() => <Text style={{color: 'black'}}>Cart</Text>} options={{
-            title: "",
-            drawerLabel: () => <Text style={styles.label}>سبد خرید</Text>,
-            drawerIcon: () => <Text style={styles.icon}>&#xf07a;</Text>,
-          }} />
+          <Drawer.Screen name="Cart" component={() => <Text style={{color: '#000'}}>Cart</Text>} />
+          <Drawer.Screen name="Latest" component={() => <Text style={{color: '#000'}}>Latest</Text>} />
+          <Drawer.Screen name="FAQ" component={() => <Text style={{color: '#000'}}>FAQ</Text>} />
+          <Drawer.Screen name="Contact" component={() => <Text style={{color: '#000'}}>Contact</Text>} />
+          <Drawer.Screen name="About" component={() => <Text style={{color: '#000'}}>About</Text>} />
+          <Drawer.Screen name="Creator" component={() => <Text style={{color: '#000'}}>Creator</Text>} />
+          <Drawer.Screen name="Share" component={() => <Text style={{color: '#000'}}>Share</Text>} />
         </Drawer.Navigator>
       </NavigationContainer>
     </>
   );
 }
 
-const styles = StyleSheet.create({
-  icon: {
-    color: '#888888',
-    fontFamily: 'Font Awesome 6 Free Solid',
-    fontSize: 20,
-    position: 'absolute',
-    right: 22
-  },
-  label: {
-    color: 'gray',
-    marginRight: 25
-  }
-});
+// const styles = StyleSheet.create({
+//   icon: {
+//     color: '#888888',
+//     fontFamily: 'Font Awesome 6 Free Solid',
+//     fontSize: 20,
+//     position: 'absolute',
+//     right: 22
+//   },
+//   label: {
+//     color: 'gray',
+//     marginRight: 25
+//   }
+// });
