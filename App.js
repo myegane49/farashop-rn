@@ -4,7 +4,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { StatusBar, I18nManager, StyleSheet, Text } from 'react-native';
 
 import Home from "./components/screens/Home";
-import ProductGroup from "./components/screens/ProductsGroup";
+import ProductsGroupScreen from "./components/screens/ProductsGroupScreen";
 import AppDrawerContent from "./components/AppDrawerContent";
 
 const Drawer = createDrawerNavigator();
@@ -48,7 +48,7 @@ export default function App() {
         })}>
           <Drawer.Screen name="Auth" component={() => <Text style={{color: '#000'}}>Auth</Text>} />
           <Drawer.Screen name="Home" component={Home} />
-          <Drawer.Screen name="ProductGroup" component={ProductGroup}
+          <Drawer.Screen name="ProductsGroupScreen" component={ProductsGroupScreen}
             // options={{
             //   title: "",
             //   drawerLabel: () => <Text style={styles.label}>دسته بندی محصولات</Text>,

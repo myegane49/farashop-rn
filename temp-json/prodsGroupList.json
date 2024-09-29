@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "کالای دیجیتال",
+    "items": [
+      {"id": 1, "title": "موبایل", "img": "https://www.shop9.ir/images/farashop/products/thumb/%D8%A7%D8%AF%DB%8C%D8%AA_%D9%87%D9%88%D9%84%D8%AF%D8%B12_961327219.jpg"},
+      {"id": 2, "title": "تبلت و کتابخوان", "img": "https://www.shop9.ir/images/farashop/products/thumb/6_1770745144.jpg"},
+      {"id": 3, "title": "لپ تاپ", "img": "https://www.shop9.ir/images/farashop/products/thumb/Untitled-1_1795774181.jpg"},
+      {"id": 4, "title": "دوربین", "img": "https://www.shop9.ir/images/farashop/products/thumb/BG4zfnnuxs16OK-4_175969659.jpg"},
+      {"id": 5, "title": "کامپیوتر و تجهیزات جانبی", "img": "https://www.shop9.ir/images/farashop/products/thumb/JJU-15664_1407311633.png"},
+      {"id": 6, "title": "ماشین های اداری", "img": "https://www.shop9.ir/images/farashop/products/thumb/18003-12_1383599264.jpg"}
+    ]
+  },
+  {
+    "id": 2,
+    "title": "آرایشی، بهداشتی و سلامت",
+    "items": [
+      {"id": 1, "title": "تبلت و کتابخوان", "img": "https://www.shop9.ir/images/farashop/products/thumb/6_1770745144.jpg"},
+      {"id": 2, "title": "موبایل", "img": "https://www.shop9.ir/images/farashop/products/thumb/%D8%A7%D8%AF%DB%8C%D8%AA_%D9%87%D9%88%D9%84%D8%AF%D8%B12_961327219.jpg"},
+      {"id": 3, "title": "لپ تاپ", "img": "https://www.shop9.ir/images/farashop/products/thumb/Untitled-1_1795774181.jpg"},
+      {"id": 4, "title": "کامپیوتر و تجهیزات جانبی", "img": "https://www.shop9.ir/images/farashop/products/thumb/JJU-15664_1407311633.png"},
+      {"id": 5, "title": "ماشین های اداری", "img": "https://www.shop9.ir/images/farashop/products/thumb/18003-12_1383599264.jpg"},
+      {"id": 6, "title": "دوربین", "img": "https://www.shop9.ir/images/farashop/products/thumb/BG4zfnnuxs16OK-4_175969659.jpg"}
+    ]
+  },
+  {
+    "id": 3,
+    "title": "صوتی و تصویری",
+    "items": [
+      {"id": 1, "title": "لپ تاپ", "img": "https://www.shop9.ir/images/farashop/products/thumb/Untitled-1_1795774181.jpg"},
+      {"id": 2, "title": "موبایل", "img": "https://www.shop9.ir/images/farashop/products/thumb/%D8%A7%D8%AF%DB%8C%D8%AA_%D9%87%D9%88%D9%84%D8%AF%D8%B12_961327219.jpg"},
+      {"id": 3, "title": "تبلت و کتابخوان", "img": "https://www.shop9.ir/images/farashop/products/thumb/6_1770745144.jpg"},
+      {"id": 4, "title": "ماشین های اداری", "img": "https://www.shop9.ir/images/farashop/products/thumb/18003-12_1383599264.jpg"},
+      {"id": 5, "title": "دوربین", "img": "https://www.shop9.ir/images/farashop/products/thumb/BG4zfnnuxs16OK-4_175969659.jpg"},
+      {"id": 6, "title": "کامپیوتر و تجهیزات جانبی", "img": "https://www.shop9.ir/images/farashop/products/thumb/JJU-15664_1407311633.png"}
+    ]
+  },
+  {
+    "id": 4,
+    "title": "تجهیزات برق و الکترونیک",
+    "items": [
+      {"id": 1, "title": "کامپیوتر و تجهیزات جانبی", "img": "https://www.shop9.ir/images/farashop/products/thumb/JJU-15664_1407311633.png"},
+      {"id": 2, "title": "ماشین های اداری", "img": "https://www.shop9.ir/images/farashop/products/thumb/18003-12_1383599264.jpg"},
+      {"id": 3, "title": "لپ تاپ", "img": "https://www.shop9.ir/images/farashop/products/thumb/Untitled-1_1795774181.jpg"},
+      {"id": 4, "title": "موبایل", "img": "https://www.shop9.ir/images/farashop/products/thumb/%D8%A7%D8%AF%DB%8C%D8%AA_%D9%87%D9%88%D9%84%D8%AF%D8%B12_961327219.jpg"},
+      {"id": 5, "title": "تبلت و کتابخوان", "img": "https://www.shop9.ir/images/farashop/products/thumb/6_1770745144.jpg"},
+      {"id": 6, "title": "دوربین", "img": "https://www.shop9.ir/images/farashop/products/thumb/BG4zfnnuxs16OK-4_175969659.jpg"}
+    ]
+  }
+]

@@ -17,7 +17,7 @@ const AppDrawerContent = (props) => {
         <Text style={styles.icon}>&#xf015;</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.drawerItem, styles.drawerItemBorder]} onPress={() => props.navigation.navigate('ProductGroup')}>
+      <TouchableOpacity style={[styles.drawerItem, styles.drawerItemBorder]} onPress={() => props.navigation.navigate('ProductsGroupScreen')}>
         <Text style={styles.label}>دسته بندی محصولات</Text>
         <Text style={styles.icon}>&#xf0ca;</Text>
       </TouchableOpacity>

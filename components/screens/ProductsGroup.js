@@ -1,12 +1,33 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet, TouchableOpacity, Text } from "react-native";
 
-import MainHeader from "../headers/MainHeader";
+import Header from "../Header";
+import prodsGroupList from "../../temp-json/prodsGroupList.json";
+import { useState } from "react";
 
-const ProductGroup = ({ navigation }) => {
+const levelOnHeight = 37
+const levelOnePaddingTop = 20
+
+const ProductsGroup = ({ navigation }) => {
+  const [levelOneCurrent, setLevelOneCurrent] = useState(1)
+
   return (
     <View style={styles.container}>
-      <MainHeader navigation={navigation} />
-      <Text style={styles.text}>دسته بندی محصولات</Text>
+      <Header navigation={navigation} headerTitle="دسته بندی محصولات" />
+      <View style={styles.levelOne}>
+        <FlatList
+          data={prodsGroupList}
+          inverted={true}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity style={[styles.levelOneBtn, levelOneCurrent == item.id ? styles.levelOneBtnActive : {}]}>
+                <Text style={[styles.levelOneText, levelOneCurrent == item.id ? styles.levelOneTextActive : {}]}>{item.title}</Text>
+              </TouchableOpacity>
+            );
+          }}
+          keyExtractor={(item) => item.id.toString()}
+          horizontal={true}
+        />
+      </View>
     </View>
   );
 };
@@ -17,11 +38,28 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
-  text: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
+  levelOne: {
+    backgroundColor: 'blue',
+    height: levelOnHeight + levelOnePaddingTop,
+    paddingTop: levelOnePaddingTop
   },
+  levelOneBtn: {
+    paddingHorizontal: 10,
+    height: levelOnHeight,
+    backgroundColor: 'yellow'
+  },
+  levelOneBtnActive: {
+    borderBottomWidth: 2,
+    borderBottomColor: '#fff',
+  },
+  levelOneText: {
+    color: '#ccc',
+    fontSize: 16
+  },
+  levelOneTextActive: {
+    color: '#fff'
+  }
+
 });
 
-export default ProductGroup;
+export default ProductsGroup;

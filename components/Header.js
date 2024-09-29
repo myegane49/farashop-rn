@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-const MainHeader = ({ navigation }) => {
+const Header = ({ navigation, headerType, headerTitle }) => {
   return (
     <View style={styles.container}>
       <View style={styles.left}>
@@ -13,14 +13,30 @@ const MainHeader = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.right}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <Image style={styles.logo} source={require('../../assets/images/header-logo.jpg')} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Text style={[styles.bars, styles.icon]}>&#xf0c9;</Text>
-        </TouchableOpacity>
-      </View>
+      {
+        headerType == 'main' ? 
+          <View style={styles.right}>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+              <Image style={styles.logo} source={require('../assets/images/header-logo.jpg')} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <Text style={[styles.bars, styles.icon]}>&#xf0c9;</Text>
+            </TouchableOpacity>
+          </View>
+        :
+          <View style={styles.right}>
+            <Text style={styles.headerTitle}>{headerTitle}</Text>
+            <TouchableOpacity onPress={() => {
+              if (navigation.canGoBack()) {
+                navigation.goBack();
+              } else {
+                navigation.openDrawer();
+              }
+            }}>
+              <Text style={[styles.bars, styles.icon]}>&#xf061;</Text>
+            </TouchableOpacity>
+          </View>
+      }
     </View>
   );
 };
@@ -63,7 +79,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Font Awesome 6 Free Solid',
     fontSize: 20,
     color: '#fff',
+  },
+  headerTitle: {
+    color: '#fff',
+    fontSize: 18
   }
 });
 
-export default MainHeader;
+export default Header;

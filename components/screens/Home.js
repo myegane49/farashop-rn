@@ -1,6 +1,6 @@
 import { View, SafeAreaView, ScrollView, StyleSheet, Image } from "react-native";
 
-import MainHeader from "../headers/MainHeader";
+import Header from "../Header";
 import ImageSlider from "../slider/ImageSlider";
 import Buttons from "../Buttons";
 import ProductSlider from "../productSlider/ProductSlider";
@@ -12,7 +12,7 @@ const Home = ({ navigation }) => {
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
-          <MainHeader navigation={navigation} />
+          <Header navigation={navigation} headerType="main" headerTitle="" />
           <ImageSlider navigation={navigation} />
           <Buttons />
           <ProductSlider title="جدیدترین ها" />
