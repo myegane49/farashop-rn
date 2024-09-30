@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-const Header = ({ navigation, headerType, headerTitle }) => {
+const Header = ({ navigation, headerType, headerTitle, style }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <View style={styles.left}>
         <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
           <Text style={[styles.cart, styles.icon]}>&#xf07a;</Text>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor:'#f54120',
     width: '100%',
-    top: 0
+    top: 0,
   },
   right: {
     flexDirection: 'row',
