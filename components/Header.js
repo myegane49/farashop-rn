@@ -4,14 +4,26 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 const Header = ({ navigation, headerType, headerTitle, style }) => {
   return (
     <View style={[styles.container, style]}>
-      <View style={styles.left}>
-        <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
-          <Text style={[styles.cart, styles.icon]}>&#xf07a;</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={[styles.mGlass, styles.icon]}>&#xf002;</Text>
-        </TouchableOpacity>
-      </View>
+      {
+        headerType == 'prod' ?
+          <View style={styles.left}>
+            <TouchableOpacity>
+              <Text style={[styles.ellipses, styles.icon]}>&#xf142;</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+              <Text style={[styles.cart, styles.icon]}>&#xf07a;</Text>
+            </TouchableOpacity>
+          </View>
+        :
+          <View style={styles.left}>
+            <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+              <Text style={[styles.cart, styles.icon]}>&#xf07a;</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text style={[styles.mGlass, styles.icon]}>&#xf002;</Text>
+            </TouchableOpacity>
+          </View>
+      }
 
       {
         headerType == 'main' ? 
@@ -25,7 +37,7 @@ const Header = ({ navigation, headerType, headerTitle, style }) => {
           </View>
         :
           <View style={styles.right}>
-            <Text style={styles.headerTitle}>{headerTitle}</Text>
+            <Text style={styles.headerTitle} numberOfLines={1} ellipsizeMode="tail" >{headerTitle}</Text>
             <TouchableOpacity onPress={() => {
               if (navigation.canGoBack()) {
                 navigation.goBack();
@@ -82,7 +94,12 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: '#fff',
-    fontSize: 18
+    fontSize: 18,
+    width: 180    
+  },
+  ellipses: {
+    marginRight: 20,
+    marginLeft: 10
   }
 });
 

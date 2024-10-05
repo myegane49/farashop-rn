@@ -1,15 +1,16 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-const Pagination = ({ index, total }) => {
+const Pagination = ({ index, total, cStyles }) => {
   return (
     <View style={styles.paginationContainer}>
       {Array.from({ length: total }).map((_, i) => (
         <View
           key={i}
           style={[
-            styles.dot,
+            styles.dot, cStyles.dot,
             index === i ? styles.activeDot : styles.inactiveDot,
+            index === i ? cStyles.activeDot : cStyles.inactiveDot
           ]}
         />
       ))}

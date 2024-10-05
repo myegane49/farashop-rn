@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import btnList from "../temp-json/btn.json";
+import groupList from "../temp-json/prodsGroupList.json";
 
 const Buttons = ({navigation}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={btnList}
+        data={groupList}
         inverted={true}
         renderItem={({ item }) => {
           return (

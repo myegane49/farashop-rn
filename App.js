@@ -2,11 +2,12 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { StatusBar, I18nManager, StyleSheet, Text } from 'react-native';
-import AdvancedFiltering from "./components/screens/AdvancedFiltering";
 
 import Home from "./components/screens/Home";
 import ProductsGroup from "./components/screens/ProductsGroup";
 import AppDrawerContent from "./components/AppDrawerContent";
+import AdvancedFiltering from "./components/screens/AdvancedFiltering";
+import Product from "./components/screens/Product";
 
 const Drawer = createDrawerNavigator();
 
@@ -71,6 +72,7 @@ export default function App() {
           <Drawer.Screen name="Share" component={() => <Text style={{color: '#000'}}>Share</Text>} />
 
           <Drawer.Screen name="AdvancedFiltering" component={AdvancedFiltering} />
+          <Drawer.Screen name="Product" component={Product} />
         </Drawer.Navigator>
       </NavigationContainer>
     </>

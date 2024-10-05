@@ -7,18 +7,12 @@ import Pagination from './Pagination';
 const carouselHeight = 250
 const screenWidth = Dimensions.get('window').width;
 
-const ImageSlider = () => {
+const ImageSlider = ({navigation, data, cStyles, pagStyles}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const width = Dimensions.get('window').width;
 
-  const data = [
-    { imgSrc: require('../../assets/images/slide1.jpg') },
-    { imgSrc: require('../../assets/images/slide2.jpg') },
-    { imgSrc: require('../../assets/images/slide3.jpg') },
-  ];
-
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, cStyles.container]}>
       <Carousel
         width={width}
         data={data}
@@ -29,14 +23,14 @@ const ImageSlider = () => {
           setActiveIndex(index)
         }}
         renderItem={({ item }) => (
-          <View style={styles.itemContainer}>
+          <View style={[styles.itemContainer, cStyles.itemContainer]}>
             <TouchableOpacity onPress={() => Alert.alert('slide')}>
-              <Image source={item.imgSrc } style={styles.image} />
+              <Image source={{uri: item.imgSrc}} style={[styles.image, cStyles.image]} />
             </TouchableOpacity>
           </View>
         )}
       />
-      <Pagination index={activeIndex} total={data.length} />
+      <Pagination index={activeIndex} total={data.length} cStyles={pagStyles} />
     </View>
   );
 };
@@ -44,7 +38,7 @@ const ImageSlider = () => {
 const styles = StyleSheet.create({
   container: {
     height: carouselHeight,
-    position: 'relative'
+    position: 'relative',
   },
   itemContainer: {
     justifyContent: 'center',

@@ -1,18 +1,24 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 
-const ProductBox = ({title, imgSrc, price, status, style}) => {
+const ProductBox = ({navigation, prod, style}) => {
 
   return (
     <View style={[styles.card, style]}>
-      <Image source={imgSrc ? {uri: imgSrc} : require("../../assets/images/nopic.webp")} style={styles.image} resizeMode="contain" />
-      <Text style={styles.title}>{title}</Text>
+      <TouchableOpacity style={styles.imageLink} onPress={() => navigation.navigate('Product', {prod})}>
+        <Image source={prod.imgSrc ? {uri: prod.imgSrc} : require("../../assets/images/nopic.webp")} style={styles.image} resizeMode="contain" />
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate('Product', {prod})}>
+        <Text style={styles.title}>{prod.title}</Text>
+      </TouchableOpacity>
+
       <View style={styles.cardFooter}>
         <TouchableOpacity onPress={() => Alert.alert('افزوده شد!')}>
           <Text style={styles.icon}>&#xf07a;</Text>
         </TouchableOpacity>
         <View style={styles.priceBox}>
           <Text style={[styles.price, styles.unit]}>تومان</Text>
-          <Text style={styles.price}>{price}</Text>
+          <Text style={styles.price}>{prod.price}</Text>
         </View>
       </View>
     </View>
@@ -35,9 +41,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 8
   },
-  image: {
+  imageLink: {
     height: "45%",
     width: '100%',
+  },
+  image: {
+    height: '100%',
+    width: '100%'
   },
   title: {
     color: "black",

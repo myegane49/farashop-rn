@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
   levelTwo: {
     flexDirection: 'column',
     backgroundColor: '#fff',
-    // marginTop: 2
   },
   levelTwoBtn: {
     height: 80,
@@ -111,7 +110,6 @@ const styles = StyleSheet.create({
   levelTwoImg: {
     height: '85%',
     width: 60,
-    backgroundColor: 'blue'
   }
 });
 

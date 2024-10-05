@@ -4,13 +4,13 @@ import { RadioButton } from 'react-native-paper';
 import Header from "../Header";
 import { useState } from "react";
 
-import prodsGroupList from "../../temp-json/prodsGroupList.json";
+import prods from "../../temp-json/prods.json";
 import ProductBox from '../productSlider/ProductBox';
 
 const AdvancedFiltering = ({ navigation, route }) => {
   const [sort, setSort] = useState(1)
   const [isModalVisible, setModalVisible] = useState(false);
-  const prods = prodsGroupList.find(group => group.id == route.params.id)
+  const prodsList = prods.filter(prod => prod.groups.includes(route.params.id))
   const sortOptions = [
     {title: 'وضعیت', id: 1},
     {title: 'پربازدیدترین', id: 2},
@@ -75,11 +75,11 @@ const AdvancedFiltering = ({ navigation, route }) => {
       </Modal>
 
       <FlatList
-        data={prods.items}
+        data={prodsList}
         contentContainerStyle={styles.prodsList}
         renderItem={({ item }) => {
           return (
-            <ProductBox title={item.title} imgSrc={item.img} price={item.price} status={item.status} style={styles.PBox} />
+            <ProductBox navigation={navigation} prod={item} style={styles.PBox} />
           );
         }}
         keyExtractor={(item) => item.id.toString()}
