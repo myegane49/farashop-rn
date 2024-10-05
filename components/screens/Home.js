@@ -14,7 +14,7 @@ const Home = ({ navigation }) => {
         <View style={styles.container}>
           <Header navigation={navigation} headerType="main" headerTitle="" />
           <ImageSlider navigation={navigation} />
-          <Buttons />
+          <Buttons navigation={navigation} />
           <ProductSlider title="جدیدترین ها" />
           <Banner imgSrc={require('../../assets/images/banner.jpg')} link="" />
           <Gallery />

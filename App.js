@@ -2,9 +2,10 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { StatusBar, I18nManager, StyleSheet, Text } from 'react-native';
+import AdvancedFiltering from "./components/screens/AdvancedFiltering";
 
 import Home from "./components/screens/Home";
-import ProductsGroupScreen from "./components/screens/ProductsGroupScreen";
+import ProductsGroup from "./components/screens/ProductsGroup";
 import AppDrawerContent from "./components/AppDrawerContent";
 
 const Drawer = createDrawerNavigator();
@@ -18,6 +19,7 @@ export default function App() {
       <NavigationContainer>
         <Drawer.Navigator
           initialRouteName="Home"
+          backBehavior="history"
           drawerContent={(props) => <AppDrawerContent {...props} />}
           screenOptions={({ navigation }) => ({
             drawerPosition: 'right',
@@ -48,7 +50,7 @@ export default function App() {
         })}>
           <Drawer.Screen name="Auth" component={() => <Text style={{color: '#000'}}>Auth</Text>} />
           <Drawer.Screen name="Home" component={Home} />
-          <Drawer.Screen name="ProductsGroupScreen" component={ProductsGroupScreen}
+          <Drawer.Screen name="ProductsGroup" component={ProductsGroup}
             // options={{
             //   title: "",
             //   drawerLabel: () => <Text style={styles.label}>دسته بندی محصولات</Text>,
@@ -67,6 +69,8 @@ export default function App() {
           <Drawer.Screen name="About" component={() => <Text style={{color: '#000'}}>About</Text>} />
           <Drawer.Screen name="Creator" component={() => <Text style={{color: '#000'}}>Creator</Text>} />
           <Drawer.Screen name="Share" component={() => <Text style={{color: '#000'}}>Share</Text>} />
+
+          <Drawer.Screen name="AdvancedFiltering" component={AdvancedFiltering} />
         </Drawer.Navigator>
       </NavigationContainer>
     </>

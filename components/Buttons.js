@@ -9,7 +9,7 @@ import {
 
 import btnList from "../temp-json/btn.json";
 
-const Buttons = () => {
+const Buttons = ({navigation}) => {
   return (
     <View style={styles.container}>
       <FlatList
@@ -17,7 +17,10 @@ const Buttons = () => {
         inverted={true}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AdvancedFiltering', {
+              title: item.title,
+              id: item.id
+            })}>
               <Text style={styles.btnText}>{item.title}</Text>
             </TouchableOpacity>
           );

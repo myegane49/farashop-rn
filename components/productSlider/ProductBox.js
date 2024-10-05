@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 
-const ProductBox = ({title, imgSrc, price, status}) => {
+const ProductBox = ({title, imgSrc, price, status, style}) => {
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, style]}>
       <Image source={imgSrc ? {uri: imgSrc} : require("../../assets/images/nopic.webp")} style={styles.image} resizeMode="contain" />
       <Text style={styles.title}>{title}</Text>
       <View style={styles.cardFooter}>
