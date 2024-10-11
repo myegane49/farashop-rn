@@ -1,69 +1,79 @@
 import { View, FlatList, StyleSheet, TouchableOpacity, Text, SafeAreaView, ScrollView, Image } from "react-native";
 
 import Header from "../Header";
-import prodsGroupList from "../../temp-json/prodsGroupList.json";
-import { useState } from "react";
+import {useEffect, useState} from 'react'
+import axios from 'axios';
 
 const elevationVal = 20
 
 const ProductsGroup = ({ navigation }) => {
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [menus, setMenus] = useState([])
+  const [levelOne, setLevelOne] = useState([])
   const [levelOneCurrent, setLevelOneCurrent] = useState(1)
 
+  useEffect(() => {
+    axios.post('https://www.shop9.ir/api/shop/Category/GetBy', {
+      ParentID: 0,
+      SelectType: 4
+    }).then(res => {
+      setMenus(res.data)
+      setLevelOne(res.data.filter(el => el.ParentId == null))
+      setLevelOneCurrent(res.data.filter(el => el.ParentId == null)[0].ID)
+    }).catch(err => {
+      setError("خطا در دریافت اطلاعات");
+    }).finally(() => {
+      setLoading(false);
+    })
+  }, []);
+ 
   return (
     <>
       <Header style={styles.header} navigation={navigation} headerTitle="دسته بندی محصولات" />
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.levelOneContainer}>
-            <View style={styles.levelOne}>
-              <FlatList
-                data={prodsGroupList}
-                inverted={true}
-                renderItem={({ item }) => {
-                  return (
-                    <TouchableOpacity style={[styles.levelOneBtn, levelOneCurrent == item.id ? styles.levelOneBtnActive : {}]}
-                      onPress={() => setLevelOneCurrent(item.id)}>
-                      <Text style={[styles.levelOneText, levelOneCurrent == item.id ? styles.levelOneTextActive : {}]}>{item.title}</Text>
-                    </TouchableOpacity>
-                  );
-                }}
-                keyExtractor={(item) => item.id.toString()}
-                horizontal={true}
-              />
-            </View>
-          </View>
-
+      <View style={styles.levelOneContainer}>
+        <View style={styles.levelOne}>
           <FlatList
-            style={styles.levelTwo}
-            data={prodsGroupList.find((list => list.id == levelOneCurrent)).items}
+            data={levelOne}
+            inverted={true}
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity style={styles.levelTwoBtn}>
-                  <Image source={{uri: item.img}} style={styles.levelTwoImg} />
-                  <Text style={styles.levelTwoText}>{item.title}</Text>
+                <TouchableOpacity style={[styles.levelOneBtn, levelOneCurrent == item.ID ? styles.levelOneBtnActive : {}]}
+                  onPress={() => setLevelOneCurrent(item.ID)}>
+                  <Text style={[styles.levelOneText, levelOneCurrent == item.ID ? styles.levelOneTextActive : {}]}>{item.Title}</Text>
                 </TouchableOpacity>
               );
             }}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.ID.toString()}
+            horizontal={true}
           />
         </View>
-      </ScrollView>
+      </View>
+
+      <FlatList
+        style={styles.levelTwo}
+        data={menus.filter(el => el.ParentId == levelOneCurrent)}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity style={styles.levelTwoBtn}>
+              <Image source={{uri: 'https://www.shop9.ir' + item.Picture}} style={styles.levelTwoImg} />
+              <Text style={styles.levelTwoText}>{item.Title}</Text>
+            </TouchableOpacity>
+          );
+        }}
+        keyExtractor={(item) => item.ID.toString()}
+      />
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
   levelOneContainer: {
     backgroundColor: '#f54120',
     height: 60,
     flexDirection: 'column-reverse',
     elevation: elevationVal,
-    zIndex: 20
+    zIndex: 20,
   },
   levelOne: {
     height: 40,
@@ -86,7 +96,7 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
   header: {
-    elevation: elevationVal
+    elevation: elevationVal,
   },
   levelTwo: {
     flexDirection: 'column',
