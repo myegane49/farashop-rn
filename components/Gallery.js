@@ -1,14 +1,19 @@
-import { StyleSheet, Image, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Image, TouchableOpacity, View, Dimensions } from "react-native";
 
-const Gallery = () => {
+const screenWidth = Dimensions.get('window').width;
+
+const Gallery = ({images}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.link}>
-        <Image source={require('../assets/images/gallery1.jpg')} style={styles.image} />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.link}>
-        <Image source={require('../assets/images/gallery2.jpg')} style={styles.image} />
-      </TouchableOpacity>
+      {
+        images.map(item => {
+          return (
+            <TouchableOpacity style={styles.link} key={item.ID}>
+              <Image source={{uri: 'https://www.shop9.ir/images/farashop/dynamic-link/' + item.Picture}} style={styles.image} />
+            </TouchableOpacity>
+          );
+        })
+      }
     </View>
   );
 };
@@ -16,13 +21,12 @@ const Gallery = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 4  
+    padding: 4
   },
   link: {
-    width: '47%',
+    width: screenWidth * 0.45,
     margin: 4,
     elevation: 5,
   },

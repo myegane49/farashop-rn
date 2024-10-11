@@ -3,7 +3,7 @@ import { StyleSheet, Image, TouchableOpacity } from "react-native";
 const Banner = ({imgSrc, link}) => {
   return (
     <TouchableOpacity style={styles.link}>
-      <Image source={imgSrc} style={styles.image} resizeMode="contain" />
+      <Image source={{uri: imgSrc}} style={styles.image} resizeMode="contain" />
     </TouchableOpacity>
   );
 };

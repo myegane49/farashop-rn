@@ -1,31 +1,22 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from "react-native";
 
-import groupList from "../temp-json/prodsGroupList.json";
-
-const Buttons = ({navigation}) => {
+const Buttons = ({data}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={groupList}
+        data={data}
         inverted={true}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AdvancedFiltering', {
-              title: item.title,
-              id: item.id
+              title: item.Title,
+              id: item.ID
             })}>
-              <Text style={styles.btnText}>{item.title}</Text>
+              <Text style={styles.btnText}>{item.Title}</Text>
             </TouchableOpacity>
           );
         }}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.ID.toString()}
         horizontal={true}
       />
     </View>

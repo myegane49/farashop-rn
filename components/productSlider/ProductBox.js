@@ -5,20 +5,23 @@ const ProductBox = ({navigation, prod, style}) => {
   return (
     <View style={[styles.card, style]}>
       <TouchableOpacity style={styles.imageLink} onPress={() => navigation.navigate('Product', {prod})}>
-        <Image source={prod.imgSrc ? {uri: prod.imgSrc} : require("../../assets/images/nopic.webp")} style={styles.image} resizeMode="contain" />
+        <Image source={prod.Picture ? {uri: `https://www.shop9.ir${prod.PicturePath}/${prod.Picture}`} : require("../../assets/images/nopic.webp")} style={styles.image} resizeMode="contain" />
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('Product', {prod})}>
-        <Text style={styles.title}>{prod.title}</Text>
+        <Text style={styles.title}>{prod.Title}</Text>
       </TouchableOpacity>
 
       <View style={styles.cardFooter}>
-        <TouchableOpacity onPress={() => Alert.alert('افزوده شد!')}>
-          <Text style={styles.icon}>&#xf07a;</Text>
-        </TouchableOpacity>
+        {prod.Status == 1 ? 
+          <TouchableOpacity onPress={() => Alert.alert('افزوده شد!')}>
+            <Text style={styles.icon}>&#xf07a;</Text>
+          </TouchableOpacity>
+          : null
+        }
         <View style={styles.priceBox}>
-          <Text style={[styles.price, styles.unit]}>تومان</Text>
-          <Text style={styles.price}>{prod.price}</Text>
+          <Text style={[styles.price, styles.unit]}>{prod.Prices.PriceUnit}</Text>
+          <Text style={styles.price}>{prod.Prices.FormattedNewPrice}</Text>
         </View>
       </View>
     </View>

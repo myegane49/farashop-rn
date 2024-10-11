@@ -6,7 +6,7 @@ import prodsList from '../../temp-json/prods.json';
 
 const width = Dimensions.get('window').width;
 
-const ProductSlider = ({navigation, title}) => {
+const ProductSlider = ({navigation, title, prods}) => {
   return (
     <View style={styles.container}>
       <View style={styles.PsTop}>
@@ -19,7 +19,7 @@ const ProductSlider = ({navigation, title}) => {
       <Carousel
         width={width / 2}
         style={styles.carousel}
-        data={prodsList}
+        data={prods}
         renderItem={({ item }) => (
           <ProductBox navigation={navigation} prod={item} />
         )}

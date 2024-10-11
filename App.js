@@ -49,7 +49,7 @@ export default function App() {
             //   return null
             // }
         })}>
-          <Drawer.Screen name="Auth" component={() => <Text style={{color: '#000'}}>Auth</Text>} />
+          {/* <Drawer.Screen name="Auth" component={() => <Text style={{color: '#000'}}>Auth</Text>} /> */}
           <Drawer.Screen name="Home" component={Home} />
           <Drawer.Screen name="ProductsGroup" component={ProductsGroup}
             // options={{
@@ -63,13 +63,13 @@ export default function App() {
             //   }
             // }}
           />
-          <Drawer.Screen name="Cart" component={() => <Text style={{color: '#000'}}>Cart</Text>} />
+          {/* <Drawer.Screen name="Cart" component={() => <Text style={{color: '#000'}}>Cart</Text>} />
           <Drawer.Screen name="Latest" component={() => <Text style={{color: '#000'}}>Latest</Text>} />
           <Drawer.Screen name="FAQ" component={() => <Text style={{color: '#000'}}>FAQ</Text>} />
           <Drawer.Screen name="Contact" component={() => <Text style={{color: '#000'}}>Contact</Text>} />
           <Drawer.Screen name="About" component={() => <Text style={{color: '#000'}}>About</Text>} />
           <Drawer.Screen name="Creator" component={() => <Text style={{color: '#000'}}>Creator</Text>} />
-          <Drawer.Screen name="Share" component={() => <Text style={{color: '#000'}}>Share</Text>} />
+          <Drawer.Screen name="Share" component={() => <Text style={{color: '#000'}}>Share</Text>} /> */}
 
           <Drawer.Screen name="AdvancedFiltering" component={AdvancedFiltering} />
           <Drawer.Screen name="Product" component={Product} />

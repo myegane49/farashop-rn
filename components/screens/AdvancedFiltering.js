@@ -77,6 +77,7 @@ const AdvancedFiltering = ({ navigation, route }) => {
       <FlatList
         data={prodsList}
         contentContainerStyle={styles.prodsList}
+        numColumns={2}
         renderItem={({ item }) => {
           return (
             <ProductBox navigation={navigation} prod={item} style={styles.PBox} />
@@ -134,7 +135,6 @@ const styles = StyleSheet.create({
   },
   prodsList: {
     flexDirection: 'row-reverse',
-    flexWrap: 'wrap',
     justifyContent: 'center',
     marginTop: 7,
   },
