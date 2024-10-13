@@ -8,10 +8,7 @@ const Buttons = ({data}) => {
         inverted={true}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AdvancedFiltering', {
-              title: item.Title,
-              id: item.ID
-            })}>
+            <TouchableOpacity style={styles.btn}>
               <Text style={styles.btnText}>{item.Title}</Text>
             </TouchableOpacity>
           );

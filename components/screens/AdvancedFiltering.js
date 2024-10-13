@@ -1,16 +1,15 @@
 import { View, FlatList, StyleSheet, TouchableOpacity, Text, Modal, TouchableWithoutFeedback } from "react-native";
-import { RadioButton } from 'react-native-paper'; 
+import { RadioButton } from 'react-native-paper';
+import axios from 'axios';
 
 import Header from "../Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import prods from "../../temp-json/prods.json";
 import ProductBox from '../productSlider/ProductBox';
 
 const AdvancedFiltering = ({ navigation, route }) => {
   const [sort, setSort] = useState(1)
   const [isModalVisible, setModalVisible] = useState(false);
-  const prodsList = prods.filter(prod => prod.groups.includes(route.params.id))
   const sortOptions = [
     {title: 'وضعیت', id: 1},
     {title: 'پربازدیدترین', id: 2},
@@ -19,6 +18,31 @@ const AdvancedFiltering = ({ navigation, route }) => {
     {title: 'ارزانترین', id: 5},
     {title: 'گرانترین', id: 6}
   ]
+
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    axios.post('https://www.shop9.ir/api/shop/AF/Find4App', {
+      ProductGroupId: route.params.groupId,
+      Skip: 0,
+      Take: 6,
+      MinPrice: 0,
+      MaxPrice: 0,
+      Q: null,
+      OrderBy: 1,
+      Status: 0,
+      Platform: 2,
+      AttributeOptionIds: [],
+    }).then(res => {
+      setProducts(res.data.Products.Products)
+    }).catch(err => {
+      setError("خطا در دریافت اطلاعات");
+    }).finally(() => {
+      setLoading(false);
+    })
+  }, []);
 
   return (
     <>
@@ -75,15 +99,18 @@ const AdvancedFiltering = ({ navigation, route }) => {
       </Modal>
 
       <FlatList
-        data={prodsList}
+        data={products}
         contentContainerStyle={styles.prodsList}
         numColumns={2}
+        initialNumToRender={6}
+        maxToRenderPerBatch={6} 
+        windowSize={3}
         renderItem={({ item }) => {
           return (
             <ProductBox navigation={navigation} prod={item} style={styles.PBox} />
           );
         }}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => index.toString()}
       />
     </>
   );
@@ -134,8 +161,6 @@ const styles = StyleSheet.create({
     fontSize: 22
   },
   prodsList: {
-    flexDirection: 'row-reverse',
-    justifyContent: 'center',
     marginTop: 7,
   },
   PBox: {

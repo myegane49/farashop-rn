@@ -35,6 +35,7 @@ export default function App() {
               position: 'relative',
               marginHorizontal: 0,
             },
+            unmountOnBlur: true
             // headerStyle: {
             //   backgroundColor: '#f54120',
             //   height: 70
