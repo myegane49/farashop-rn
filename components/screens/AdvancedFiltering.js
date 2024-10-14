@@ -25,7 +25,8 @@ const AdvancedFiltering = ({ navigation, route }) => {
 
   useEffect(() => {
     axios.post('https://www.shop9.ir/api/shop/AF/Find4App', {
-      ProductGroupId: route.params.groupId,
+      ProductGroupId: route.params.type == 3 ? route.params.id : null,
+      TagID: route.params.type == 2 ? route.params.id : null,
       Skip: 0,
       Take: 6,
       MinPrice: 0,
@@ -44,6 +45,7 @@ const AdvancedFiltering = ({ navigation, route }) => {
     })
   }, []);
 
+  // console.log(route.params.id)
   return (
     <>
       <Header style={styles.header} navigation={navigation} headerTitle={route.params.title} />

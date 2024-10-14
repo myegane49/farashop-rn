@@ -2,24 +2,27 @@ import { View, Text, Dimensions, StyleSheet, Alert, TouchableOpacity } from 'rea
 import Carousel from 'react-native-reanimated-carousel';
 
 import ProductBox from './ProductBox';
-import prodsList from '../../temp-json/prods.json';
 
 const width = Dimensions.get('window').width;
 
-const ProductSlider = ({navigation, title, prods}) => {
+const ProductSlider = ({navigation, content}) => {
   return (
     <View style={styles.container}>
       <View style={styles.PsTop}>
-        <TouchableOpacity onPress={() => Alert.alert(title)}>
+        <TouchableOpacity onPress={() => navigation.navigate('AdvancedFiltering', {
+          id: content.ContentID,
+          type: content.ContentType,
+          title: content.Title
+        })}>
           <Text style={styles.showMore}>نمایش بیشتر</Text>
         </TouchableOpacity>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title}>{content.Title}</Text>
       </View>
 
       <Carousel
         width={width / 2}
         style={styles.carousel}
-        data={prods}
+        data={content.Items}
         renderItem={({ item }) => (
           <ProductBox navigation={navigation} prod={item} />
         )}

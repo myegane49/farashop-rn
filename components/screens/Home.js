@@ -47,11 +47,11 @@ const Home = ({ navigation }) => {
           <Header navigation={navigation} headerType="main" headerTitle="" />
           <ImageSlider data={slides} cStyles={sliderStyles} pagStyles={pagStyles} />
           <Buttons data={btns} />
-          <ProductSlider navigation={navigation} title={newest.Title} prods={newest.Items} />
+          <ProductSlider navigation={navigation} content={newest} />
           <Banner imgSrc={"https://www.shop9.ir/images/farashop/dynamic-link/" + banner1.Picture} link="" />
           <Gallery images={gallery} />
           <Banner imgSrc={"https://www.shop9.ir/images/farashop/dynamic-link/" + banner2.Picture} link="" />
-          <ProductSlider navigation={navigation} title={bags.Title} prods={bags.Items} />
+          <ProductSlider navigation={navigation} content={bags} />
         </View>
       </ScrollView>
     </SafeAreaView>

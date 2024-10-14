@@ -55,7 +55,11 @@ const ProductsGroup = ({ navigation }) => {
         data={menus.filter(el => el.ParentId == levelOneCurrent)}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity style={styles.levelTwoBtn} onPress={() => navigation.navigate('AdvancedFiltering', {groupId: item.ID, title: item.Title})}>
+            <TouchableOpacity style={styles.levelTwoBtn} onPress={() => navigation.navigate('AdvancedFiltering', {
+              id: item.ID,
+              type: 3,
+              title: item.Title
+            })}>
               <Image source={{uri: 'https://www.shop9.ir' + item.Picture}} style={styles.levelTwoImg} />
               <Text style={styles.levelTwoText}>{item.Title}</Text>
             </TouchableOpacity>
