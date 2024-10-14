@@ -13,15 +13,15 @@ const Product = ({ navigation, route }) => {
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
-          <Header navigation={navigation} headerType="prod" headerTitle={prod.title} />
-          <ImageSlider navigation={navigation} data={prod.gallery} cStyles={sliderStyles} pagStyles={pagStyles} />
+          <Header navigation={navigation} headerType="prod" headerTitle={prod.Title} />
+          {/* <ImageSlider navigation={navigation} data={prod.gallery} cStyles={sliderStyles} pagStyles={pagStyles} /> */}
 
           <View style={styles.titleContainer}>
             <View style={styles.titleBtns}>
               <TouchableOpacity><Text style={styles.titleBtn}>&#xf1e0;</Text></TouchableOpacity>
               <TouchableOpacity><Text style={styles.titleBtn}>&#xf004;</Text></TouchableOpacity>
             </View>
-            <Text style={styles.title}>{prod.title}</Text>
+            <Text style={styles.title}>{prod.Title}</Text>
           </View>
 
           <View style={styles.paddingContainer}>
@@ -52,11 +52,11 @@ const Product = ({ navigation, route }) => {
                 </View>
               </View>
 
-              <Text style={styles.desc}>{prod.desc}</Text>
+              <Text style={styles.desc}>{prod.Summary}</Text>
 
               <View style={styles.priceBox}>
-                <Text style={styles.price}>تومان</Text>
-                <Text style={styles.price}>{prod.price}</Text>
+                <Text style={styles.price}>{prod.Prices.PriceUnit}</Text>
+                <Text style={styles.price}>{prod.Prices.FormattedNewPrice}</Text>
               </View>
 
               <TouchableOpacity style={styles.addToCartBtn}>
