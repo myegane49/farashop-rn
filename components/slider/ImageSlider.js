@@ -7,7 +7,7 @@ import Pagination from './Pagination';
 const carouselHeight = 250
 const screenWidth = Dimensions.get('window').width;
 
-const ImageSlider = ({data, cStyles, pagStyles}) => {
+const ImageSlider = ({data, cStyles, pagStyles, type}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const width = Dimensions.get('window').width;
 
@@ -22,13 +22,16 @@ const ImageSlider = ({data, cStyles, pagStyles}) => {
         onSnapToItem={index => {
           setActiveIndex(index)
         }}
-        renderItem={({ item }) => (
+        renderItem={({ item }) =>
           <View style={[styles.itemContainer, cStyles.itemContainer]}>
             <TouchableOpacity onPress={() => Alert.alert('slide')}>
-              <Image source={{uri: `https://www.shop9.ir/images/farashop/dynamic-link/${item.Picture}`}} style={[styles.image, cStyles.image]} />
+              {type == 'product' 
+                ? <Image source={{uri: `https://www.shop9.ir${item.Path}`}} style={[styles.image, cStyles.image]} />
+                : <Image source={{uri: `https://www.shop9.ir/images/farashop/dynamic-link/${item.Picture}`}} style={[styles.image, cStyles.image]} />
+              }
             </TouchableOpacity>
           </View>
-        )}
+        }
       />
       <Pagination index={activeIndex} total={data.length} cStyles={pagStyles} />
     </View>

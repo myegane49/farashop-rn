@@ -1,7 +1,7 @@
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { StatusBar, I18nManager, StyleSheet, Text } from 'react-native';
+import { StatusBar, I18nManager, StyleSheet } from 'react-native';
 
 import Home from "./components/screens/Home";
 import ProductsGroup from "./components/screens/ProductsGroup";

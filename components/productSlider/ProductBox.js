@@ -4,7 +4,7 @@ const ProductBox = ({navigation, prod, style}) => {
 
   return (
     <View style={[styles.card, style]}>
-      <TouchableOpacity style={styles.imageLink} onPress={() => navigation.navigate('Product', {prod})}>
+      <TouchableOpacity style={styles.imageLink} onPress={() => navigation.navigate('Product', {prodId: prod.ID})}>
         <Image source={prod.Picture ? {uri: `https://www.shop9.ir${prod.PicturePath}${prod.PictureExt}`} : require("../../assets/images/nopic.webp")} style={styles.image} resizeMode="contain" />
       </TouchableOpacity>
 

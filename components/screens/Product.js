@@ -1,4 +1,6 @@
 import { View, SafeAreaView, ScrollView, StyleSheet, Text, Dimensions, TouchableOpacity,  } from "react-native";
+import axios from 'axios';
+import { useState, useEffect } from "react";
 
 import Header from "../Header";
 import ImageSlider from "../slider/ImageSlider";
@@ -7,21 +9,41 @@ const screenWidth = Dimensions.get('window').width;
 const carouselHeight = 300
 
 const Product = ({ navigation, route }) => {
-  const prod = route.params.prod
+  const prodId = route.params.prodId
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [prod, setProd] = useState({})
+
+  useEffect(() => {
+    axios.post('https://www.shop9.ir/api/shop/Product/GetDetails', {
+      ProductID: prodId,
+    }).then(res => {
+      setProd(res.data)
+    }).catch(err => {
+      setError("خطا در دریافت اطلاعات");
+    }).finally(() => {
+      setLoading(false);
+    })
+  }, []);
+  
+  const removeHtmlTags = (text) => {
+    text = text.replace(/&nbsp;/g, '').replace(/&zwnj;/g, '')
+    return text.replace(/<[^>]*>/g, '');
+  };
   
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
-          <Header navigation={navigation} headerType="prod" headerTitle={prod.Title} />
-          {/* <ImageSlider navigation={navigation} data={prod.gallery} cStyles={sliderStyles} pagStyles={pagStyles} /> */}
+          <Header navigation={navigation} headerType="prod" headerTitle={prod.Title.Main} />
+          <ImageSlider navigation={navigation} data={prod.ProductImages.Gallery} type="product" cStyles={sliderStyles} pagStyles={pagStyles} />
 
           <View style={styles.titleContainer}>
             <View style={styles.titleBtns}>
               <TouchableOpacity><Text style={styles.titleBtn}>&#xf1e0;</Text></TouchableOpacity>
               <TouchableOpacity><Text style={styles.titleBtn}>&#xf004;</Text></TouchableOpacity>
             </View>
-            <Text style={styles.title}>{prod.Title}</Text>
+            <Text style={styles.title}>{prod.Title.Main}</Text>
           </View>
 
           <View style={styles.paddingContainer}>
@@ -52,11 +74,11 @@ const Product = ({ navigation, route }) => {
                 </View>
               </View>
 
-              <Text style={styles.desc}>{prod.Summary}</Text>
+              <Text style={styles.desc}>{removeHtmlTags(prod.Description)}</Text>
 
               <View style={styles.priceBox}>
                 <Text style={styles.price}>{prod.Prices.PriceUnit}</Text>
-                <Text style={styles.price}>{prod.Prices.FormattedNewPrice}</Text>
+                <Text style={styles.price}>{prod.Prices.NewPrice}</Text>
               </View>
 
               <TouchableOpacity style={styles.addToCartBtn}>

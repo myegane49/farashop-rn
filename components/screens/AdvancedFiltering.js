@@ -1,10 +1,9 @@
 import { View, FlatList, StyleSheet, TouchableOpacity, Text, Modal, TouchableWithoutFeedback } from "react-native";
 import { RadioButton } from 'react-native-paper';
 import axios from 'axios';
-
-import Header from "../Header";
 import { useState, useEffect } from "react";
 
+import Header from "../Header";
 import ProductBox from '../productSlider/ProductBox';
 
 const AdvancedFiltering = ({ navigation, route }) => {
@@ -12,9 +11,9 @@ const AdvancedFiltering = ({ navigation, route }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const sortOptions = [
     {title: 'وضعیت', id: 1},
-    {title: 'پربازدیدترین', id: 2},
-    {title: 'پرفروشترین', id: 3},
-    {title: 'جدیدترین', id: 4},
+    {title: 'جدیدترین', id: 2},
+    {title: 'پربازدیدترین', id: 3},
+    {title: 'پرفروشترین', id: 4},
     {title: 'ارزانترین', id: 5},
     {title: 'گرانترین', id: 6}
   ]
@@ -32,7 +31,7 @@ const AdvancedFiltering = ({ navigation, route }) => {
       MinPrice: 0,
       MaxPrice: 0,
       Q: null,
-      OrderBy: 1,
+      OrderBy: sort,
       Status: 0,
       Platform: 2,
       AttributeOptionIds: [],
@@ -43,9 +42,8 @@ const AdvancedFiltering = ({ navigation, route }) => {
     }).finally(() => {
       setLoading(false);
     })
-  }, []);
+  }, [sort]);
 
-  // console.log(route.params.id)
   return (
     <>
       <Header style={styles.header} navigation={navigation} headerTitle={route.params.title} />
