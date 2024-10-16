@@ -1,9 +1,10 @@
-import { View, SafeAreaView, ScrollView, StyleSheet, Text, Dimensions, TouchableOpacity,  } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet, ActivityIndicator, Text, Dimensions, TouchableOpacity,  } from "react-native";
 import axios from 'axios';
 import { useState, useEffect } from "react";
 
 import Header from "../Header";
 import ImageSlider from "../slider/ImageSlider";
+import Loading from "../Loading";
 
 const screenWidth = Dimensions.get('window').width;
 const carouselHeight = 300
@@ -33,67 +34,78 @@ const Product = ({ navigation, route }) => {
   
   return (
     <SafeAreaView>
-      <ScrollView>
-        <View style={styles.container}>
-          <Header navigation={navigation} headerType="prod" headerTitle={prod.Title.Main} />
-          <ImageSlider navigation={navigation} data={prod.ProductImages.Gallery} type="product" cStyles={sliderStyles} pagStyles={pagStyles} />
+      {
+        loading ?
+        <Loading /> :
 
-          <View style={styles.titleContainer}>
-            <View style={styles.titleBtns}>
-              <TouchableOpacity><Text style={styles.titleBtn}>&#xf1e0;</Text></TouchableOpacity>
-              <TouchableOpacity><Text style={styles.titleBtn}>&#xf004;</Text></TouchableOpacity>
-            </View>
-            <Text style={styles.title}>{prod.Title.Main}</Text>
-          </View>
+        <ScrollView>
+          <View style={styles.container}>
+            <Header navigation={navigation} headerType="prod" headerTitle={prod.Title.Main} />
+            <ImageSlider navigation={navigation} data={prod.ProductImages.Gallery} type="product" cStyles={sliderStyles} pagStyles={pagStyles} />
 
-          <View style={styles.paddingContainer}>
-            <View style={styles.tabs}>
-              <TouchableOpacity style={styles.tab}>
-                <Text style={styles.tabText}>نظرات کاربران</Text>
-                <Text style={styles.tabIcon}>&#xf086;</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.tab}>
-                <Text style={styles.tabText}>مشخصات</Text>
-                <Text style={styles.tabIcon}>&#xf328;</Text>
-              </TouchableOpacity>
+            <View style={styles.titleContainer}>
+              <View style={styles.titleBtns}>
+                <TouchableOpacity><Text style={styles.titleBtn}>&#xf1e0;</Text></TouchableOpacity>
+                <TouchableOpacity><Text style={styles.titleBtn}>&#xf004;</Text></TouchableOpacity>
+              </View>
+              <Text style={styles.title}>{prod.Title.Main}</Text>
             </View>
 
-            <View style={styles.info}>
-              <View style={styles.attrs}>
-                <View>
-                  <Text style={styles.attr}>رنگ</Text>
-                  <Text style={styles.attrOption}>قرمز</Text>
-                </View>
-                <View>
-                  <Text style={styles.attr}>باتری</Text>
-                  <Text style={styles.attrOption}>72h</Text>
-                </View>
-                <View>
-                  <Text style={styles.attr}>گارانتی</Text>
-                  <Text style={styles.attrOption}>۲۴ ماه</Text>
-                </View>
+            <View style={styles.paddingContainer}>
+              <View style={styles.tabs}>
+                <TouchableOpacity style={styles.tab}>
+                  <Text style={styles.tabText}>نظرات کاربران</Text>
+                  <Text style={styles.tabIcon}>&#xf086;</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.tab}>
+                  <Text style={styles.tabText}>مشخصات</Text>
+                  <Text style={styles.tabIcon}>&#xf328;</Text>
+                </TouchableOpacity>
               </View>
 
-              <Text style={styles.desc}>{removeHtmlTags(prod.Description)}</Text>
+              <View style={styles.info}>
+                <View style={styles.attrs}>
+                  <View>
+                    <Text style={styles.attr}>رنگ</Text>
+                    <Text style={styles.attrOption}>قرمز</Text>
+                  </View>
+                  <View>
+                    <Text style={styles.attr}>باتری</Text>
+                    <Text style={styles.attrOption}>72h</Text>
+                  </View>
+                  <View>
+                    <Text style={styles.attr}>گارانتی</Text>
+                    <Text style={styles.attrOption}>۲۴ ماه</Text>
+                  </View>
+                </View>
 
-              <View style={styles.priceBox}>
-                <Text style={styles.price}>{prod.Prices.PriceUnit}</Text>
-                <Text style={styles.price}>{prod.Prices.NewPrice}</Text>
+                <Text style={styles.desc}>{removeHtmlTags(prod.Description)}</Text>
+
+                <View style={styles.priceBox}>
+                  <Text style={styles.price}>{prod.Prices.PriceUnit}</Text>
+                  <Text style={styles.price}>{prod.Prices.NewPrice}</Text>
+                </View>
+
+                <TouchableOpacity style={styles.addToCartBtn}>
+                  <Text style={styles.addToCartBtnText}>افزودن به سبد خرید</Text>
+                  <Text style={styles.addToCartBtnIcon}>&#xf217;</Text>
+                </TouchableOpacity>
               </View>
-
-              <TouchableOpacity style={styles.addToCartBtn}>
-                <Text style={styles.addToCartBtnText}>افزودن به سبد خرید</Text>
-                <Text style={styles.addToCartBtnIcon}>&#xf217;</Text>
-              </TouchableOpacity>
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      }
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: Dimensions.get('window').height
+  },
   container: {
     flex: 1,
     alignItems: "center",

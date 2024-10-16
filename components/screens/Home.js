@@ -8,6 +8,7 @@ import Buttons from "../Buttons";
 import ProductSlider from "../productSlider/ProductSlider";
 import Banner from "../Banner";
 import Gallery from "../Gallery";
+import Loading from "../Loading";
 
 const Home = ({ navigation }) => {
   const [error, setError] = useState("")
@@ -42,18 +43,23 @@ const Home = ({ navigation }) => {
  
   return (
     <SafeAreaView>
-      <ScrollView>
-        <View style={styles.container}>
-          <Header navigation={navigation} headerType="main" headerTitle="" />
-          <ImageSlider data={slides} cStyles={sliderStyles} pagStyles={pagStyles} />
-          <Buttons data={btns} />
-          <ProductSlider navigation={navigation} content={newest} />
-          <Banner imgSrc={"https://www.shop9.ir/images/farashop/dynamic-link/" + banner1.Picture} link="" />
-          <Gallery images={gallery} />
-          <Banner imgSrc={"https://www.shop9.ir/images/farashop/dynamic-link/" + banner2.Picture} link="" />
-          <ProductSlider navigation={navigation} content={bags} />
-        </View>
-      </ScrollView>
+      {
+        loading ?
+        <Loading /> :
+
+        <ScrollView>
+          <View style={styles.container}>
+            <Header navigation={navigation} headerType="main" headerTitle="" />
+            <ImageSlider data={slides} cStyles={sliderStyles} pagStyles={pagStyles} />
+            <Buttons data={btns} />
+            <ProductSlider navigation={navigation} content={newest} />
+            <Banner imgSrc={"https://www.shop9.ir/images/farashop/dynamic-link/" + banner1.Picture} link="" />
+            <Gallery images={gallery} />
+            <Banner imgSrc={"https://www.shop9.ir/images/farashop/dynamic-link/" + banner2.Picture} link="" />
+            <ProductSlider navigation={navigation} content={bags} />
+          </View>
+        </ScrollView>
+      }
     </SafeAreaView>
   );
 };

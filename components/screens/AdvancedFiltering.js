@@ -1,10 +1,11 @@
-import { View, FlatList, StyleSheet, TouchableOpacity, Text, Modal, TouchableWithoutFeedback } from "react-native";
+import { View, FlatList, StyleSheet, TouchableOpacity, Text, Modal, TouchableWithoutFeedback, SafeAreaView } from "react-native";
 import { RadioButton } from 'react-native-paper';
 import axios from 'axios';
 import { useState, useEffect } from "react";
 
 import Header from "../Header";
 import ProductBox from '../productSlider/ProductBox';
+import Loading from "../Loading";
 
 const AdvancedFiltering = ({ navigation, route }) => {
   const [sort, setSort] = useState(1)
@@ -23,6 +24,7 @@ const AdvancedFiltering = ({ navigation, route }) => {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
+    setLoading(true)
     axios.post('https://www.shop9.ir/api/shop/AF/Find4App', {
       ProductGroupId: route.params.type == 3 ? route.params.id : null,
       TagID: route.params.type == 2 ? route.params.id : null,
@@ -42,77 +44,84 @@ const AdvancedFiltering = ({ navigation, route }) => {
     }).finally(() => {
       setLoading(false);
     })
-  }, [sort]);
+  }, [sort, route.params.id]);
 
   return (
-    <>
-      <Header style={styles.header} navigation={navigation} headerTitle={route.params.title} />
-      <View style={styles.filters}>
-        <TouchableOpacity style={styles.view}>
-          <Text style={[styles.icon, styles.viewIcon]}>&#xf0ca;</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.filterBtn} onPress={() => setModalVisible(true)}>
-          <View style={styles.filterText}>
-            <Text style={styles.filterTitle}>مرتب سازی</Text>
-            <Text style={styles.filterSummary}>{sortOptions.find(el => el.id == sort).title}</Text>
+    <SafeAreaView>
+      {
+        loading ?
+        <Loading /> :
+
+        <>
+          <Header style={styles.header} navigation={navigation} headerTitle={route.params.title} />
+          <View style={styles.filters}>
+            <TouchableOpacity style={styles.view}>
+              <Text style={[styles.icon, styles.viewIcon]}>&#xf0ca;</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.filterBtn} onPress={() => setModalVisible(true)}>
+              <View style={styles.filterText}>
+                <Text style={styles.filterTitle}>مرتب سازی</Text>
+                <Text style={styles.filterSummary}>{sortOptions.find(el => el.id == sort).title}</Text>
+              </View>
+              <Text style={styles.icon}>&#xf161;</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.filterBtn}>
+              <View style={styles.filterText}>
+                <Text style={styles.filterTitle}>فیلتر کردن</Text>
+                <Text style={styles.filterSummary}>رنگ، نوع، قیمت و ...</Text>
+              </View>
+              <Text style={styles.icon}>&#xf0b0;</Text>
+            </TouchableOpacity>
           </View>
-          <Text style={styles.icon}>&#xf161;</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.filterBtn}>
-          <View style={styles.filterText}>
-            <Text style={styles.filterTitle}>فیلتر کردن</Text>
-            <Text style={styles.filterSummary}>رنگ، نوع، قیمت و ...</Text>
-          </View>
-          <Text style={styles.icon}>&#xf0b0;</Text>
-        </TouchableOpacity>
-      </View>
 
-      <Modal
-        visible={isModalVisible}
-        animationType="fade"
-        transparent={true}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
+          <Modal
+            visible={isModalVisible}
+            animationType="fade"
+            transparent={true}
+            onRequestClose={() => setModalVisible(false)}
+          >
+            <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
 
-              {sortOptions.map((option, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.radioButtonContainer}
-                  onPress={() => setSort(option.id)}
-                >
-                  <Text style={styles.optionText}>{option.title}</Text>
-                  <RadioButton
-                    value={option.id}
-                    status={option.id == sort ? 'checked' : 'unchecked'}
-                    onPress={() => setSort(option.id)}
-                    color="green"
-                  />
-                </TouchableOpacity>
-              ))}
+                  {sortOptions.map((option, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      style={styles.radioButtonContainer}
+                      onPress={() => setSort(option.id)}
+                    >
+                      <Text style={styles.optionText}>{option.title}</Text>
+                      <RadioButton
+                        value={option.id}
+                        status={option.id == sort ? 'checked' : 'unchecked'}
+                        onPress={() => setSort(option.id)}
+                        color="green"
+                      />
+                    </TouchableOpacity>
+                  ))}
 
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
 
-      <FlatList
-        data={products}
-        contentContainerStyle={styles.prodsList}
-        numColumns={2}
-        initialNumToRender={6}
-        maxToRenderPerBatch={6} 
-        windowSize={3}
-        renderItem={({ item }) => {
-          return (
-            <ProductBox navigation={navigation} prod={item} style={styles.PBox} />
-          );
-        }}
-        keyExtractor={(item, index) => index.toString()}
-      />
-    </>
+          <FlatList
+            data={products}
+            contentContainerStyle={styles.prodsList}
+            numColumns={2}
+            initialNumToRender={6}
+            maxToRenderPerBatch={6} 
+            windowSize={3}
+            renderItem={({ item }) => {
+              return (
+                <ProductBox navigation={navigation} prod={item} style={styles.PBox} />
+              );
+            }}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </>
+      }
+    </SafeAreaView>
   );
 };
 

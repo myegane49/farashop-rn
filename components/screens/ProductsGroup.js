@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react'
 import axios from 'axios';
 
 import Header from "../Header";
+import Loading from "../Loading";
 
 const elevationVal = 20
 
@@ -29,45 +30,72 @@ const ProductsGroup = ({ navigation }) => {
   }, []);
  
   return (
-    <>
-      <Header style={styles.header} navigation={navigation} headerTitle="دسته بندی محصولات" />
-      <View style={styles.levelOneContainer}>
-        <View style={styles.levelOne}>
-          <FlatList
-            data={levelOne}
-            inverted={true}
-            renderItem={({ item }) => {
-              return (
-                <TouchableOpacity style={[styles.levelOneBtn, levelOneCurrent == item.ID ? styles.levelOneBtnActive : {}]}
-                  onPress={() => setLevelOneCurrent(item.ID)}>
-                  <Text style={[styles.levelOneText, levelOneCurrent == item.ID ? styles.levelOneTextActive : {}]}>{item.Title}</Text>
-                </TouchableOpacity>
-              );
-            }}
-            keyExtractor={(item) => item.ID.toString()}
-            horizontal={true}
-          />
-        </View>
-      </View>
+    <SafeAreaView>
+      {
+        loading ?
+        <Loading /> :
 
-      <FlatList
-        style={styles.levelTwo}
-        data={menus.filter(el => el.ParentId == levelOneCurrent)}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity style={styles.levelTwoBtn} onPress={() => navigation.navigate('AdvancedFiltering', {
-              id: item.ID,
-              type: 3,
-              title: item.Title
-            })}>
-              <Image source={{uri: 'https://www.shop9.ir' + item.Picture}} style={styles.levelTwoImg} />
-              <Text style={styles.levelTwoText}>{item.Title}</Text>
-            </TouchableOpacity>
-          );
-        }}
-        keyExtractor={(item) => item.ID.toString()}
-      />
-    </>
+        <>
+          <Header style={styles.header} navigation={navigation} headerTitle="دسته بندی محصولات" />
+          <ScrollView>
+            <View style={styles.levelOneContainer}>
+              <View style={styles.levelOne}>
+                <FlatList
+                  data={levelOne}
+                  inverted={true}
+                  renderItem={({ item }) => {
+                    return (
+                      <TouchableOpacity style={[styles.levelOneBtn, levelOneCurrent == item.ID ? styles.levelOneBtnActive : {}]}
+                        onPress={() => setLevelOneCurrent(item.ID)}>
+                        <Text style={[styles.levelOneText, levelOneCurrent == item.ID ? styles.levelOneTextActive : {}]}>{item.Title}</Text>
+                      </TouchableOpacity>
+                    );
+                  }}
+                  keyExtractor={(item) => item.ID.toString()}
+                  horizontal={true}
+                />
+              </View>
+            </View>
+            
+            <View style={styles.levelTwo}>
+              {
+                menus.filter(el => el.ParentId == levelOneCurrent).map(item => {
+                  return (
+                    <TouchableOpacity key={item.ID.toString()} style={styles.levelTwoBtn} onPress={() => navigation.navigate('AdvancedFiltering', {
+                      id: item.ID,
+                      type: 3,
+                      title: item.Title
+                    })}>
+                      <Image source={{uri: 'https://www.shop9.ir' + item.Picture}} style={styles.levelTwoImg} />
+                      <Text style={styles.levelTwoText}>{item.Title}</Text>
+                    </TouchableOpacity>
+                  )
+                })
+              }
+            </View>
+            
+            {/* <FlatList
+              style={styles.levelTwo}
+              data={menus.filter(el => el.ParentId == levelOneCurrent)}
+              renderItem={({ item }) => {
+                return (
+                  <TouchableOpacity style={styles.levelTwoBtn} onPress={() => navigation.navigate('AdvancedFiltering', {
+                    id: item.ID,
+                    type: 3,
+                    title: item.Title
+                  })}>
+                    <Image source={{uri: 'https://www.shop9.ir' + item.Picture}} style={styles.levelTwoImg} />
+                    <Text style={styles.levelTwoText}>{item.Title}</Text>
+                  </TouchableOpacity>
+                );
+              }}
+              keyExtractor={(item) => item.ID.toString()}
+            /> */}
+
+          </ScrollView>
+        </>
+      }
+    </SafeAreaView>
   );
 };
 
