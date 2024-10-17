@@ -1,4 +1,6 @@
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from "react-native";
+import { StyleSheet, View, FlatList, TouchableOpacity } from "react-native";
+
+import Text from "./Text";
 
 const Buttons = ({data}) => {
   return (

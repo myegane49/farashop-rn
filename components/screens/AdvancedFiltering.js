@@ -1,4 +1,4 @@
-import { View, FlatList, StyleSheet, TouchableOpacity, Text, Modal, TouchableWithoutFeedback, SafeAreaView } from "react-native";
+import { View, FlatList, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, SafeAreaView } from "react-native";
 import { RadioButton } from 'react-native-paper';
 import axios from 'axios';
 import { useState, useEffect } from "react";
@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Header from "../Header";
 import ProductBox from '../productSlider/ProductBox';
 import Loading from "../Loading";
+import Text from "../Text";
 
 const AdvancedFiltering = ({ navigation, route }) => {
   const [sort, setSort] = useState(1)

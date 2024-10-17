@@ -16,6 +16,30 @@
     {
       "path": "assets/icons/Font Awesome v4 Compatibility Regular.ttf",
       "sha1": "bd27e43f3d1e5019faaabc9ec6c5d3d7c5f100ef"
+    },
+    {
+      "path": "assets/fonts/IRANSansMobileFaNum.ttf",
+      "sha1": "830c3bbddc74d5cf3f5dceedcdc25d25864622be"
+    },
+    {
+      "path": "assets/fonts/IRANSansMobileFaNumBlack.ttf",
+      "sha1": "cf50bdbbfa96de5474cbf839d89b46829a04efa8"
+    },
+    {
+      "path": "assets/fonts/IRANSansMobileFaNumBold.ttf",
+      "sha1": "30804cf6192e8c51327fe30da4faad5ecd8d24b8"
+    },
+    {
+      "path": "assets/fonts/IRANSansMobileFaNumLight.ttf",
+      "sha1": "071dbe91da0e5f2af93f5492ba470195cb88854e"
+    },
+    {
+      "path": "assets/fonts/IRANSansMobileFaNumMedium.ttf",
+      "sha1": "803845d97ad623faa1113612b726c8b1852ecf03"
+    },
+    {
+      "path": "assets/fonts/IRANSansMobileFaNumUltraLight.ttf",
+      "sha1": "d77e6dba7dbf6d6c3cde0b649b3f28f9593b1a96"
     }
   ]
 }

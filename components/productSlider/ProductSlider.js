@@ -1,7 +1,8 @@
-import { View, Text, Dimensions, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { View, Dimensions, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 
 import ProductBox from './ProductBox';
+import Text from '../Text';
 
 const width = Dimensions.get('window').width;
 

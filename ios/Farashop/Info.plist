@@ -53,6 +53,12 @@
 		<string>Font Awesome 6 Brands Regular.ttf</string>
 		<string>Font Awesome 6 Free Regular.ttf</string>
 		<string>Font Awesome v4 Compatibility Regular.ttf</string>
+		<string>IRANSansMobileFaNum.ttf</string>
+		<string>IRANSansMobileFaNumBlack.ttf</string>
+		<string>IRANSansMobileFaNumBold.ttf</string>
+		<string>IRANSansMobileFaNumLight.ttf</string>
+		<string>IRANSansMobileFaNumMedium.ttf</string>
+		<string>IRANSansMobileFaNumUltraLight.ttf</string>
 	</array>
 </dict>
 </plist>

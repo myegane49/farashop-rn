@@ -1,10 +1,11 @@
-import { View, SafeAreaView, ScrollView, StyleSheet, ActivityIndicator, Text, Dimensions, TouchableOpacity,  } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet, Dimensions, TouchableOpacity,  } from "react-native";
 import axios from 'axios';
 import { useState, useEffect } from "react";
 
 import Header from "../Header";
 import ImageSlider from "../slider/ImageSlider";
 import Loading from "../Loading";
+import Text from "../Text";
 
 const screenWidth = Dimensions.get('window').width;
 const carouselHeight = 300

@@ -1,9 +1,10 @@
-import { View, FlatList, StyleSheet, TouchableOpacity, Text, SafeAreaView, ScrollView, Image } from "react-native";
+import { View, FlatList, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, Image } from "react-native";
 import {useEffect, useState} from 'react'
 import axios from 'axios';
 
 import Header from "../Header";
 import Loading from "../Loading";
+import Text from "../Text";
 
 const elevationVal = 20
 
