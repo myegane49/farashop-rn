@@ -58,6 +58,8 @@ const AdvancedFiltering = ({ navigation, route }) => {
   const loadMoreItems = () => {
     if (loadMore || !hasMore) return;
     setLoadMore(true);
+    console.log(skip),
+    console.log(page)
 
     axios.post('https://www.shop9.ir/api/shop/AF/Find4App', {
       ProductGroupId: route.params.type == 3 ? route.params.id : null,

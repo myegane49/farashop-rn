@@ -8,6 +8,7 @@ import ProductsGroup from "./components/screens/ProductsGroup";
 import AppDrawerContent from "./components/AppDrawerContent";
 import AdvancedFiltering from "./components/screens/AdvancedFiltering";
 import Product from "./components/screens/Product";
+import Default from "./components/screens/Default"
 
 const Drawer = createDrawerNavigator();
 
@@ -50,7 +51,7 @@ export default function App() {
             //   return null
             // }
         })}>
-          {/* <Drawer.Screen name="Auth" component={() => <Text style={{color: '#000'}}>Auth</Text>} /> */}
+          <Drawer.Screen name="Auth" component={Default} initialParams={{title: 'auth'}} />
           <Drawer.Screen name="Home" component={Home} />
           <Drawer.Screen name="ProductsGroup" component={ProductsGroup}
             // options={{
@@ -64,13 +65,13 @@ export default function App() {
             //   }
             // }}
           />
-          {/* <Drawer.Screen name="Cart" component={() => <Text style={{color: '#000'}}>Cart</Text>} />
-          <Drawer.Screen name="Latest" component={() => <Text style={{color: '#000'}}>Latest</Text>} />
-          <Drawer.Screen name="FAQ" component={() => <Text style={{color: '#000'}}>FAQ</Text>} />
-          <Drawer.Screen name="Contact" component={() => <Text style={{color: '#000'}}>Contact</Text>} />
-          <Drawer.Screen name="About" component={() => <Text style={{color: '#000'}}>About</Text>} />
-          <Drawer.Screen name="Creator" component={() => <Text style={{color: '#000'}}>Creator</Text>} />
-          <Drawer.Screen name="Share" component={() => <Text style={{color: '#000'}}>Share</Text>} /> */}
+          <Drawer.Screen name="Cart" component={Default} initialParams={{title: 'cart'}} />
+          <Drawer.Screen name="Latest" component={AdvancedFiltering} initialParams={{type: 2, id: 6}} />
+          <Drawer.Screen name="FAQ" component={Default} initialParams={{title: 'faq'}} />
+          <Drawer.Screen name="Contact" component={Default} initialParams={{title: 'contact'}} />
+          <Drawer.Screen name="About" component={Default} initialParams={{title: 'about'}} />
+          <Drawer.Screen name="Creator" component={Default} initialParams={{title: 'creator'}} />
+          <Drawer.Screen name="Share" component={Default} initialParams={{title: 'share'}} />
 
           <Drawer.Screen name="AdvancedFiltering" component={AdvancedFiltering} />
           <Drawer.Screen name="Product" component={Product} />
