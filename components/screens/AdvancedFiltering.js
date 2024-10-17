@@ -1,4 +1,4 @@
-import { View, FlatList, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, SafeAreaView } from "react-native";
+import { View, FlatList, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, SafeAreaView, ActivityIndicator } from "react-native";
 import { RadioButton } from 'react-native-paper';
 import axios from 'axios';
 import { useState, useEffect } from "react";
@@ -8,9 +8,15 @@ import ProductBox from '../productSlider/ProductBox';
 import Loading from "../Loading";
 import Text from "../Text";
 
+const take = 8
+
 const AdvancedFiltering = ({ navigation, route }) => {
   const [sort, setSort] = useState(1)
   const [isModalVisible, setModalVisible] = useState(false);
+  const [skip, setSkip] = useState(take)
+  const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(true);
+  const [loadMore, setLoadMore] = useState(false);
   const sortOptions = [
     {title: 'وضعیت', id: 1},
     {title: 'جدیدترین', id: 2},
@@ -23,6 +29,7 @@ const AdvancedFiltering = ({ navigation, route }) => {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(true)
   const [products, setProducts] = useState([])
+  const [totalCount, setTotalCount] = useState(0)
 
   useEffect(() => {
     setLoading(true)
@@ -30,7 +37,7 @@ const AdvancedFiltering = ({ navigation, route }) => {
       ProductGroupId: route.params.type == 3 ? route.params.id : null,
       TagID: route.params.type == 2 ? route.params.id : null,
       Skip: 0,
-      Take: 6,
+      Take: take,
       MinPrice: 0,
       MaxPrice: 0,
       Q: null,
@@ -40,6 +47,7 @@ const AdvancedFiltering = ({ navigation, route }) => {
       AttributeOptionIds: [],
     }).then(res => {
       setProducts(res.data.Products.Products)
+      setTotalCount(res.data.Products.TotalCount)
     }).catch(err => {
       setError("خطا در دریافت اطلاعات");
     }).finally(() => {
@@ -47,8 +55,36 @@ const AdvancedFiltering = ({ navigation, route }) => {
     })
   }, [sort, route.params.id]);
 
+  const loadMoreItems = () => {
+    if (loadMore || !hasMore) return;
+    setLoadMore(true);
+
+    axios.post('https://www.shop9.ir/api/shop/AF/Find4App', {
+      ProductGroupId: route.params.type == 3 ? route.params.id : null,
+      TagID: route.params.type == 2 ? route.params.id : null,
+      Skip: skip,
+      Take: take,
+      MinPrice: 0,
+      MaxPrice: 0,
+      Q: null,
+      OrderBy: sort,
+      Status: 0,
+      Platform: 2,
+      AttributeOptionIds: [],
+    }).then(res => {
+      setProducts(prevProds => [...prevProds, ...res.data.Products.Products])
+      setPage(prevPage => prevPage + 1)
+      setSkip(prevSkip => prevSkip + take)
+      if (products.length == totalCount) setHasMore(false);
+    }).catch(err => {
+      setError("خطا در دریافت اطلاعات");
+    }).finally(() => {
+      setLoadMore(false);
+    })
+  };
+
   return (
-    <SafeAreaView>
+    <>
       {
         loading ?
         <Loading /> :
@@ -104,25 +140,30 @@ const AdvancedFiltering = ({ navigation, route }) => {
                 </View>
               </View>
             </TouchableWithoutFeedback>
-          </Modal>
+          </Modal> 
 
           <FlatList
             data={products}
             contentContainerStyle={styles.prodsList}
             numColumns={2}
-            initialNumToRender={6}
-            maxToRenderPerBatch={6} 
-            windowSize={3}
+            // initialNumToRender={6}
+            // maxToRenderPerBatch={6} 
+            // windowSize={3}
+            onEndReached={loadMoreItems}
+            // onEndReachedThreshold={2}
+            ListFooterComponent={() => {
+              return loadMore ? <ActivityIndicator size="large" color="#f54120" style={styles.loadingIndicator} /> : null
+            }}
             renderItem={({ item }) => {
               return (
                 <ProductBox navigation={navigation} prod={item} style={styles.PBox} />
               );
             }}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item) => item.ID.toString()}
           />
         </>
       }
-    </SafeAreaView>
+    </>
   );
 };
 
@@ -201,6 +242,9 @@ const styles = StyleSheet.create({
   optionText: {
     marginRight: 20,
     color: 'black'
+  },
+  loadingIndicator: {
+    padding: 16,
   },
 });
 
