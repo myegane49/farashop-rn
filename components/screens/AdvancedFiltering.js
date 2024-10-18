@@ -15,7 +15,6 @@ const AdvancedFiltering = ({ navigation, route }) => {
   const [sort, setSort] = useState(1)
   const [isModalVisible, setModalVisible] = useState(false);
   const [skip, setSkip] = useState(take)
-  const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true);
   const [loadMore, setLoadMore] = useState(false);
   const sortOptions = [
@@ -32,6 +31,8 @@ const AdvancedFiltering = ({ navigation, route }) => {
   const [products, setProducts] = useState([])
   const [totalCount, setTotalCount] = useState(0)
   const [subLevel, setSubLevel] = useState(null)
+  const [parentId, setParentId] = useState(0)
+  const [parentTitle, setParentTitle] = useState('')
 
   useEffect(() => {
     setLoading(true)
@@ -61,6 +62,16 @@ const AdvancedFiltering = ({ navigation, route }) => {
       } else {
         setSubLevel(null)
       }
+    }).then(() => {
+      return axios.post('https://www.shop9.ir/api/shop/Category/GetBy', {
+        ParentID: 0,
+        SelectType: 4
+      })
+    }).then(res => {
+      const parId = res.data.find(el => el.ID == route.params.id).ParentId
+      setParentId(parId)
+      const parTitle = res.data.find(el => el.ID == parId).Title
+      setParentTitle(parTitle)
     }).catch(err => {
       setError("خطا در دریافت اطلاعات");
     }).finally(() => {
@@ -104,7 +115,15 @@ const AdvancedFiltering = ({ navigation, route }) => {
         <Loading /> :
 
         <>
-          <Header style={styles.header} navigation={navigation} headerTitle={route.params.title} />
+          <Header style={styles.header} navigation={navigation} headerTitle={route.params.title} screen={{
+            name: 'AdvancedFiltering',
+            prevState: route.params.prevState,
+            data: {
+              id: parentId,
+              type: 3,
+              title: parentTitle
+            }
+          }} />
           <View style={styles.filters}>
             <TouchableOpacity style={styles.view}>
               <Text style={[styles.icon, styles.viewIcon]}>&#xf0ca;</Text>
@@ -127,7 +146,7 @@ const AdvancedFiltering = ({ navigation, route }) => {
 
           {
             subLevel ?
-            <Buttons data={subLevel} type="prodGroup" navigation={navigation} /> :
+            <Buttons data={subLevel} type="prodGroup" navigation={navigation} parentId={route.params.id} parentTitle={route.params.title} /> :
             null
           }
 

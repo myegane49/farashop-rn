@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 import Text from './Text';
 
-const Header = ({ navigation, headerType, headerTitle, style }) => {
+const Header = ({ navigation, headerType, headerTitle, style, screen }) => {
   return (
     <View style={[styles.container, style]}>
       {
@@ -41,7 +41,9 @@ const Header = ({ navigation, headerType, headerTitle, style }) => {
           <View style={styles.right}>
             <Text style={styles.headerTitle} numberOfLines={1} ellipsizeMode="tail" >{headerTitle}</Text>
             <TouchableOpacity onPress={() => {
-              if (navigation.canGoBack()) {
+              if (screen?.prevState) {
+                navigation.navigate(screen.name, screen.data)
+              } else if (navigation.canGoBack()) {
                 navigation.goBack();
               } else {
                 navigation.openDrawer();

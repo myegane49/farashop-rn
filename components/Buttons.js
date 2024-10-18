@@ -1,5 +1,4 @@
 import { StyleSheet, View, FlatList, TouchableOpacity } from "react-native";
-import axios from 'axios';
 
 import Text from "./Text";
 
@@ -16,7 +15,8 @@ const Buttons = ({data, type, navigation}) => {
                 navigation.navigate('AdvancedFiltering', {
                   id: item.ID,
                   type: 3,
-                  title: item.Title
+                  title: item.Title,
+                  prevState: true
                 })
               }
             }}>
