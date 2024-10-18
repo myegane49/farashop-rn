@@ -1,8 +1,9 @@
 import { StyleSheet, View, FlatList, TouchableOpacity } from "react-native";
+import axios from 'axios';
 
 import Text from "./Text";
 
-const Buttons = ({data}) => {
+const Buttons = ({data, type, navigation}) => {
   return (
     <View style={styles.container}>
       <FlatList
@@ -10,7 +11,15 @@ const Buttons = ({data}) => {
         inverted={true}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={() => {
+              if (type == 'prodGroup') {
+                navigation.navigate('AdvancedFiltering', {
+                  id: item.ID,
+                  type: 3,
+                  title: item.Title
+                })
+              }
+            }}>
               <Text style={styles.btnText}>{item.Title}</Text>
             </TouchableOpacity>
           );

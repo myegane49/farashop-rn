@@ -7,6 +7,7 @@ import Header from "../Header";
 import ProductBox from '../productSlider/ProductBox';
 import Loading from "../Loading";
 import Text from "../Text";
+import Buttons from "../Buttons";
 
 const take = 8
 
@@ -30,6 +31,7 @@ const AdvancedFiltering = ({ navigation, route }) => {
   const [loading, setLoading] = useState(true)
   const [products, setProducts] = useState([])
   const [totalCount, setTotalCount] = useState(0)
+  const [subLevel, setSubLevel] = useState(null)
 
   useEffect(() => {
     setLoading(true)
@@ -48,18 +50,28 @@ const AdvancedFiltering = ({ navigation, route }) => {
     }).then(res => {
       setProducts(res.data.Products.Products)
       setTotalCount(res.data.Products.TotalCount)
+    }).then(() => {
+      return axios.post('https://www.shop9.ir/api/shop/Category/GetBy', {
+        ParentID: route.params.id,
+        SelectType: 4
+      })
+    }).then(res => {
+      if (res.data.length > 0) {
+        setSubLevel(res.data)
+      } else {
+        setSubLevel(null)
+      }
     }).catch(err => {
       setError("خطا در دریافت اطلاعات");
     }).finally(() => {
       setLoading(false);
     })
+
   }, [sort, route.params.id]);
 
   const loadMoreItems = () => {
     if (loadMore || !hasMore) return;
     setLoadMore(true);
-    console.log(skip),
-    console.log(page)
 
     axios.post('https://www.shop9.ir/api/shop/AF/Find4App', {
       ProductGroupId: route.params.type == 3 ? route.params.id : null,
@@ -112,6 +124,12 @@ const AdvancedFiltering = ({ navigation, route }) => {
               <Text style={styles.icon}>&#xf0b0;</Text>
             </TouchableOpacity>
           </View>
+
+          {
+            subLevel ?
+            <Buttons data={subLevel} type="prodGroup" navigation={navigation} /> :
+            null
+          }
 
           <Modal
             visible={isModalVisible}

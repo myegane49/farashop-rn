@@ -62,7 +62,7 @@ const Home = ({ navigation }) => {
       }
     </SafeAreaView>
   );
-};
+}; 
  
 const styles = StyleSheet.create({
   container: {
