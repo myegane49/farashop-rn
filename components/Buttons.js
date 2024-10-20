@@ -15,10 +15,19 @@ const Buttons = ({data, type, navigation}) => {
                 navigation.navigate('AdvancedFiltering', {
                   id: item.ID,
                   type: 3,
-                  title: item.Title,
                   prevState: true
                 })
+              } else {
+                if (item.LinkType == 1) {
+                  navigation.navigate('AdvancedFiltering', {
+                    id: item.LinkID,
+                    type: 3,
+                  })
+                } else {
+                  navigation.navigate('Product', {prodId: item.LinkID})
+                }
               }
+              
             }}>
               <Text style={styles.btnText}>{item.Title}</Text>
             </TouchableOpacity>

@@ -1,9 +1,18 @@
 import { StyleSheet, Image, TouchableOpacity } from "react-native";
 
-const Banner = ({imgSrc, link}) => {
+const Banner = ({navigation, data}) => {
   return (
-    <TouchableOpacity style={styles.link}>
-      <Image source={{uri: imgSrc}} style={styles.image} resizeMode="contain" />
+    <TouchableOpacity style={styles.link} onPress={() => {
+      if (data.LinkType == 1) {
+        navigation.navigate('AdvancedFiltering', {
+          id: data.LinkID,
+          type: 3,
+        })
+      } else {
+        navigation.navigate('Product', {prodId: data.LinkID})
+      }
+    }}>
+      <Image source={{uri: "https://www.shop9.ir/images/farashop/dynamic-link/" + data.Picture}} style={styles.image} resizeMode="contain" />
     </TouchableOpacity>
   );
 };

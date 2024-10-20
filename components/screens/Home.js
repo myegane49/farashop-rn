@@ -11,52 +11,59 @@ import Gallery from "../Gallery";
 import Loading from "../Loading";
 
 const Home = ({ navigation }) => {
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(true)
-  const [newest, setNewest] = useState({})
-  const [bags, setBags] = useState({})
-  const [slides, setSlides] = useState([])
-  const [btns, setBtns] = useState([])
-  const [banner1, setBanner1] = useState('')
-  const [banner2, setBanner2] = useState('')
-  const [gallery, setGallery] = useState([])
-
+  const [data, setData] = useState({
+    loading: true,
+    newest: {},
+    bags: {},
+    slides: [],
+    btns: [],
+    banner1: {},
+    banner2: {},
+    gallery: []
+  })
+ 
   useEffect(() => {
       axios.post('https://www.shop9.ir/api/shop/App/GetAll', {
         DynamicContentTake: 10,
         TagTake: 10,
         CartID: ''
       }).then(res => {
-        setNewest(res.data.DynamicContents.find(el => el.ContentID == 6));
-        setBags(res.data.DynamicContents.find(el => el.ContentID == 1567));
-        setSlides(res.data.DynamicLinks.Sliders);
-        setBtns(res.data.DynamicLinks.Texts);
-        setBanner1(res.data.DynamicLinks.Banners.find(el => el.LinkID == 64));
-        setBanner2(res.data.DynamicLinks.Banners.find(el => el.LinkID == 1345));
-        setGallery(res.data.DynamicLinks.Galleries);
+        setData(prevData => ({
+          ...prevData,
+          newest: res.data.DynamicContents.find(el => el.ContentID == 6),
+          bags: res.data.DynamicContents.find(el => el.ContentID == 1567),
+          slides: res.data.DynamicLinks.Sliders,
+          btns: res.data.DynamicLinks.Texts,
+          banner1: res.data.DynamicLinks.Banners.find(el => el.LinkID == 64),
+          banner2: res.data.DynamicLinks.Banners.find(el => el.LinkID == 1345),
+          gallery: res.data.DynamicLinks.Galleries
+        }))
       }).catch(err => {
-        setError("خطا در دریافت اطلاعات");
+        console.log(err);
       }).finally(() => {
-        setLoading(false);
+        setData(prevData => ({
+          ...prevData,
+          loading: false
+        }));
       })
   }, []);
  
   return (
     <SafeAreaView>
       {
-        loading ?
+        data.loading ?
         <Loading /> :
 
         <ScrollView>
           <View style={styles.container}>
             <Header navigation={navigation} headerType="main" headerTitle="" />
-            <ImageSlider data={slides} cStyles={sliderStyles} pagStyles={pagStyles} />
-            <Buttons data={btns} />
-            <ProductSlider navigation={navigation} content={newest} />
-            <Banner imgSrc={"https://www.shop9.ir/images/farashop/dynamic-link/" + banner1.Picture} link="" />
-            <Gallery images={gallery} />
-            <Banner imgSrc={"https://www.shop9.ir/images/farashop/dynamic-link/" + banner2.Picture} link="" />
-            <ProductSlider navigation={navigation} content={bags} />
+            <ImageSlider data={data.slides} navigation={navigation} cStyles={sliderStyles} pagStyles={pagStyles} />
+            <Buttons data={data.btns} navigation={navigation} />
+            <ProductSlider navigation={navigation} content={data.newest} />
+            <Banner data={data.banner1} navigation={navigation} />
+            <Gallery navigation={navigation} images={data.gallery} />
+            <Banner navigation={navigation} data={data.banner2} />
+            <ProductSlider navigation={navigation} content={data.bags} />
           </View>
         </ScrollView>
       }

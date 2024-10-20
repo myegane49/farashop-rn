@@ -33,6 +33,7 @@ const AdvancedFiltering = ({ navigation, route }) => {
   const [subLevel, setSubLevel] = useState(null)
   const [parentId, setParentId] = useState(0)
   const [parentTitle, setParentTitle] = useState('')
+  const [title, setTitle] = useState('')
 
   useEffect(() => {
     setLoading(true)
@@ -68,8 +69,9 @@ const AdvancedFiltering = ({ navigation, route }) => {
         SelectType: 4
       })
     }).then(res => {
-      const parId = res.data.find(el => el.ID == route.params.id).ParentId
-      setParentId(parId)
+      const currGroup = res.data.find(el => el.ID == route.params.id)
+      setTitle(currGroup.Title)
+      setParentId(currGroup.ParentId)
       const parTitle = res.data.find(el => el.ID == parId).Title
       setParentTitle(parTitle)
     }).catch(err => {
@@ -115,7 +117,7 @@ const AdvancedFiltering = ({ navigation, route }) => {
         <Loading /> :
 
         <>
-          <Header style={styles.header} navigation={navigation} headerTitle={route.params.title} screen={{
+          <Header style={styles.header} navigation={navigation} headerTitle={title} screen={{
             name: 'AdvancedFiltering',
             prevState: route.params.prevState,
             data: {

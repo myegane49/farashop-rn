@@ -2,13 +2,22 @@ import { StyleSheet, Image, TouchableOpacity, View, Dimensions } from "react-nat
 
 const screenWidth = Dimensions.get('window').width;
 
-const Gallery = ({images}) => {
+const Gallery = ({images, navigation}) => {
   return (
     <View style={styles.container}>
       {
         images.map(item => {
           return (
-            <TouchableOpacity style={styles.link} key={item.ID}>
+            <TouchableOpacity style={styles.link} key={item.ID} onPress={() => {
+              if (item.LinkType == 1) {
+                navigation.navigate('AdvancedFiltering', {
+                  id: item.LinkID,
+                  type: 3,
+                })
+              } else {
+                navigation.navigate('Product', {prodId: item.LinkID})
+              }
+            }}>
               <Image source={{uri: 'https://www.shop9.ir/images/farashop/dynamic-link/' + item.Picture}} style={styles.image} />
             </TouchableOpacity>
           );

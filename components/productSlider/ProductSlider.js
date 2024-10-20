@@ -12,8 +12,7 @@ const ProductSlider = ({navigation, content}) => {
       <View style={styles.PsTop}>
         <TouchableOpacity onPress={() => navigation.navigate('AdvancedFiltering', {
           id: content.ContentID,
-          type: content.ContentType,
-          title: content.Title
+          type: content.ContentType
         })}>
           <Text style={styles.showMore}>نمایش بیشتر</Text>
         </TouchableOpacity>

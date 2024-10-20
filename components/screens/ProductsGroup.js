@@ -64,8 +64,7 @@ const ProductsGroup = ({ navigation }) => {
                   return (
                     <TouchableOpacity key={item.ID.toString()} style={styles.levelTwoBtn} onPress={() => navigation.navigate('AdvancedFiltering', {
                       id: item.ID,
-                      type: 3,
-                      title: item.Title
+                      type: 3
                     })}>
                       <Image source={{uri: 'https://www.shop9.ir' + item.Picture}} style={styles.levelTwoImg} />
                       <Text style={styles.levelTwoText}>{item.Title}</Text>
