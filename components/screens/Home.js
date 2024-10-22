@@ -50,23 +50,24 @@ const Home = ({ navigation }) => {
  
   return (
     <SafeAreaView>
-      {
-        data.loading ?
-        <Loading /> :
-
         <ScrollView>
           <View style={styles.container}>
             <Header navigation={navigation} headerType="main" headerTitle="" />
-            <ImageSlider data={data.slides} navigation={navigation} cStyles={sliderStyles} pagStyles={pagStyles} />
-            <Buttons data={data.btns} navigation={navigation} />
-            <ProductSlider navigation={navigation} content={data.newest} />
-            <Banner data={data.banner1} navigation={navigation} />
-            <Gallery navigation={navigation} images={data.gallery} />
-            <Banner navigation={navigation} data={data.banner2} />
-            <ProductSlider navigation={navigation} content={data.bags} />
+            {
+              data.loading ?
+              <Loading /> :
+              <>
+                <ImageSlider data={data.slides} navigation={navigation} cStyles={sliderStyles} pagStyles={pagStyles} />
+                <Buttons data={data.btns} navigation={navigation} />
+                <ProductSlider navigation={navigation} content={data.newest} />
+                <Banner data={data.banner1} navigation={navigation} />
+                <Gallery navigation={navigation} images={data.gallery} />
+                <Banner navigation={navigation} data={data.banner2} />
+                <ProductSlider navigation={navigation} content={data.bags} />
+              </>
+            }
           </View>
         </ScrollView>
-      }
     </SafeAreaView>
   );
 };  

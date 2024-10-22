@@ -9,46 +9,53 @@ import Text from "../Text";
 const elevationVal = 20
 
 const ProductsGroup = ({ navigation }) => {
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(true)
-  const [menus, setMenus] = useState([])
-  const [levelOne, setLevelOne] = useState([])
-  const [levelOneCurrent, setLevelOneCurrent] = useState(1)
+  const [data, setData] = useState({
+    loading: true,
+    menus: [],
+    levelOne: [],
+    levelOneCurrent: 1
+  })
 
   useEffect(() => {
     axios.post('https://www.shop9.ir/api/shop/Category/GetBy', {
       ParentID: 0,
       SelectType: 4
     }).then(res => {
-      setMenus(res.data)
-      setLevelOne(res.data.filter(el => el.ParentId == null))
-      setLevelOneCurrent(res.data.filter(el => el.ParentId == null)[0].ID)
+      setData(prevData => ({
+        ...prevData,
+        menus: res.data,
+        levelOne: res.data.filter(el => el.ParentId == null),
+        levelOneCurrent: res.data.filter(el => el.ParentId == null)[0].ID
+      }))
     }).catch(err => {
-      setError("خطا در دریافت اطلاعات");
+      console.log("خطا در دریافت اطلاعات");
     }).finally(() => {
-      setLoading(false);
+      setData(prevData => ({
+        ...prevData,
+        loading: false
+      }));
     })
   }, []);
  
   return (
     <SafeAreaView>
-      {
-        loading ?
-        <Loading /> :
 
-        <>
-          <Header style={styles.header} navigation={navigation} headerTitle="دسته بندی محصولات" />
+      <>
+        <Header style={styles.header} navigation={navigation} headerTitle="دسته بندی محصولات" />
+        {
+          data.loading ?
+          <Loading /> :
           <ScrollView>
             <View style={styles.levelOneContainer}>
               <View style={styles.levelOne}>
                 <FlatList
-                  data={levelOne}
+                  data={data.levelOne}
                   inverted={true}
                   renderItem={({ item }) => {
                     return (
-                      <TouchableOpacity style={[styles.levelOneBtn, levelOneCurrent == item.ID ? styles.levelOneBtnActive : {}]}
-                        onPress={() => setLevelOneCurrent(item.ID)}>
-                        <Text style={[styles.levelOneText, levelOneCurrent == item.ID ? styles.levelOneTextActive : {}]}>{item.Title}</Text>
+                      <TouchableOpacity style={[styles.levelOneBtn, data.levelOneCurrent == item.ID ? styles.levelOneBtnActive : {}]}
+                        onPress={() => setData(prevData => ({...prevData, levelOneCurrent: item.ID}))}>
+                        <Text style={[styles.levelOneText, data.levelOneCurrent == item.ID ? styles.levelOneTextActive : {}]}>{item.Title}</Text>
                       </TouchableOpacity>
                     );
                   }}
@@ -60,7 +67,7 @@ const ProductsGroup = ({ navigation }) => {
             
             <View style={styles.levelTwo}>
               {
-                menus.filter(el => el.ParentId == levelOneCurrent).map(item => {
+                data.menus.filter(el => el.ParentId == data.levelOneCurrent).map(item => {
                   return (
                     <TouchableOpacity key={item.ID.toString()} style={styles.levelTwoBtn} onPress={() => navigation.navigate('AdvancedFiltering', {
                       id: item.ID,
@@ -93,8 +100,8 @@ const ProductsGroup = ({ navigation }) => {
             /> */}
 
           </ScrollView>
-        </>
-      }
+        }
+      </>
     </SafeAreaView>
   );
 };
