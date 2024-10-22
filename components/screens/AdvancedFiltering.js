@@ -1,7 +1,7 @@
 import { View, FlatList, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, SafeAreaView, ActivityIndicator } from "react-native";
 import { RadioButton } from 'react-native-paper';
 import axios from 'axios';
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import Header from "../Header";
 import ProductBox from '../productSlider/ProductBox';
@@ -10,33 +10,38 @@ import Text from "../Text";
 import Buttons from "../Buttons";
 
 const take = 8
+const sortOptions = [
+  {title: 'وضعیت', id: 1},
+  {title: 'جدیدترین', id: 2},
+  {title: 'پربازدیدترین', id: 3},
+  {title: 'پرفروشترین', id: 4},
+  {title: 'ارزانترین', id: 5},
+  {title: 'گرانترین', id: 6}
+]
 
 const AdvancedFiltering = ({ navigation, route }) => {
-  const [sort, setSort] = useState(1)
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [skip, setSkip] = useState(take)
+  const [sort, setSort] = useState({
+    sortOption: 1,
+    isModalVisible: false
+  })
+  const [prods, setProds] = useState({
+    products: [],
+    skip: take,
+    totalCount: 0
+  })
+  const [parent, setParent] = useState({
+    parentId: 0,
+    parentTitle: '',
+    title: ''
+  })
   const [hasMore, setHasMore] = useState(true);
   const [loadMore, setLoadMore] = useState(false);
-  const sortOptions = [
-    {title: 'وضعیت', id: 1},
-    {title: 'جدیدترین', id: 2},
-    {title: 'پربازدیدترین', id: 3},
-    {title: 'پرفروشترین', id: 4},
-    {title: 'ارزانترین', id: 5},
-    {title: 'گرانترین', id: 6}
-  ]
-
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(true)
-  const [products, setProducts] = useState([])
-  const [totalCount, setTotalCount] = useState(0)
   const [subLevel, setSubLevel] = useState(null)
-  const [parentId, setParentId] = useState(0)
-  const [parentTitle, setParentTitle] = useState('')
-  const [title, setTitle] = useState('')
+  const [loading, setLoading] = useState(true)
+
+  console.log(prods.skip)
 
   useEffect(() => {
-    setLoading(true)
     axios.post('https://www.shop9.ir/api/shop/AF/Find4App', {
       ProductGroupId: route.params.type == 3 ? route.params.id : null,
       TagID: route.params.type == 2 ? route.params.id : null,
@@ -45,13 +50,16 @@ const AdvancedFiltering = ({ navigation, route }) => {
       MinPrice: 0,
       MaxPrice: 0,
       Q: null,
-      OrderBy: sort,
+      OrderBy: sort.sortOption,
       Status: 0,
       Platform: 2,
       AttributeOptionIds: [],
     }).then(res => {
-      setProducts(res.data.Products.Products)
-      setTotalCount(res.data.Products.TotalCount)
+      setProds(prevData => ({
+        ...prevData,
+        products: res.data.Products.Products,
+        totalCount: res.data.Products.TotalCount
+      }))
     }).then(() => {
       return axios.post('https://www.shop9.ir/api/shop/Category/GetBy', {
         ParentID: route.params.id,
@@ -70,17 +78,18 @@ const AdvancedFiltering = ({ navigation, route }) => {
       })
     }).then(res => {
       const currGroup = res.data.find(el => el.ID == route.params.id)
-      setTitle(currGroup.Title)
-      setParentId(currGroup.ParentId)
-      const parTitle = res.data.find(el => el.ID == parId).Title
-      setParentTitle(parTitle)
+      setParent({
+        parentId: currGroup.ParentId,
+        parentTitle: res.data.find(el => el.ID == currGroup.ParentId).Title,
+        title: currGroup.Title
+      })
     }).catch(err => {
-      setError("خطا در دریافت اطلاعات");
+      console.log(err);
     }).finally(() => {
       setLoading(false);
     })
 
-  }, [sort, route.params.id]);
+  }, [sort.sortOption, route.params.id]);
 
   const loadMoreItems = () => {
     if (loadMore || !hasMore) return;
@@ -89,22 +98,26 @@ const AdvancedFiltering = ({ navigation, route }) => {
     axios.post('https://www.shop9.ir/api/shop/AF/Find4App', {
       ProductGroupId: route.params.type == 3 ? route.params.id : null,
       TagID: route.params.type == 2 ? route.params.id : null,
-      Skip: skip,
+      Skip: prods.skip,
       Take: take,
       MinPrice: 0,
       MaxPrice: 0,
       Q: null,
-      OrderBy: sort,
+      OrderBy: sort.sortOption,
       Status: 0,
       Platform: 2,
       AttributeOptionIds: [],
     }).then(res => {
-      setProducts(prevProds => [...prevProds, ...res.data.Products.Products])
-      setPage(prevPage => prevPage + 1)
-      setSkip(prevSkip => prevSkip + take)
-      if (products.length == totalCount) setHasMore(false);
+      if (prods.products.length != prods.totalCount) {
+        setProds(prevData => ({
+          ...prevData,
+          products: [...prevData.products, ...res.data.Products.Products],
+          skip: prevData.skip + take
+        }))
+      } 
+      if (prods.products.length == prods.totalCount) setHasMore(false);
     }).catch(err => {
-      setError("خطا در دریافت اطلاعات");
+      console.log(err);
     }).finally(() => {
       setLoadMore(false);
     })
@@ -117,23 +130,23 @@ const AdvancedFiltering = ({ navigation, route }) => {
         <Loading /> :
 
         <>
-          <Header style={styles.header} navigation={navigation} headerTitle={title} screen={{
+          <Header style={styles.header} navigation={navigation} headerTitle={parent.title} screen={{
             name: 'AdvancedFiltering',
             prevState: route.params.prevState,
             data: {
-              id: parentId,
+              id: parent.parentId,
               type: 3,
-              title: parentTitle
+              title: parent.parentTitle
             }
           }} />
           <View style={styles.filters}>
             <TouchableOpacity style={styles.view}>
               <Text style={[styles.icon, styles.viewIcon]}>&#xf0ca;</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.filterBtn} onPress={() => setModalVisible(true)}>
+            <TouchableOpacity style={styles.filterBtn} onPress={() => setSort(prevData => ({...prevData, isModalVisible: true}))}>
               <View style={styles.filterText}>
                 <Text style={styles.filterTitle}>مرتب سازی</Text>
-                <Text style={styles.filterSummary}>{sortOptions.find(el => el.id == sort).title}</Text>
+                <Text style={styles.filterSummary}>{sortOptions.find(el => el.id == sort.sortOption).title}</Text>
               </View>
               <Text style={styles.icon}>&#xf161;</Text>
             </TouchableOpacity>
@@ -153,12 +166,12 @@ const AdvancedFiltering = ({ navigation, route }) => {
           }
 
           <Modal
-            visible={isModalVisible}
+            visible={sort.isModalVisible}
             animationType="fade"
             transparent={true}
-            onRequestClose={() => setModalVisible(false)}
+            onRequestClose={() => setSort(prevData => ({...prevData, isModalVisible: false}))}
           >
-            <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+            <TouchableWithoutFeedback onPress={() => setSort(prevData => ({...prevData, isModalVisible: false}))}>
               <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
 
@@ -166,13 +179,13 @@ const AdvancedFiltering = ({ navigation, route }) => {
                     <TouchableOpacity
                       key={index}
                       style={styles.radioButtonContainer}
-                      onPress={() => setSort(option.id)}
+                      onPress={() => setSort({isModalVisible: false, sortOption: option.id})}
                     >
                       <Text style={styles.optionText}>{option.title}</Text>
                       <RadioButton
                         value={option.id}
-                        status={option.id == sort ? 'checked' : 'unchecked'}
-                        onPress={() => setSort(option.id)}
+                        status={option.id == sort.sortOption ? 'checked' : 'unchecked'}
+                        onPress={() => setSort({isModalVisible: false, sortOption: option.id})}
                         color="green"
                       />
                     </TouchableOpacity>
@@ -184,7 +197,7 @@ const AdvancedFiltering = ({ navigation, route }) => {
           </Modal> 
 
           <FlatList
-            data={products}
+            data={prods.products}
             contentContainerStyle={styles.prodsList}
             numColumns={2}
             // initialNumToRender={6}
@@ -289,4 +302,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdvancedFiltering;
+export default React.memo(AdvancedFiltering);

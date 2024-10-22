@@ -12,26 +12,18 @@ const carouselHeight = 300
 
 const Product = ({ navigation, route }) => {
   const prodId = route.params.prodId
-  const [data, setData] = useState({
-    loading: true,
-    prod: {}
-  })
+  const [prod, setProd] = useState({})
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     axios.post('https://www.shop9.ir/api/shop/Product/GetDetails', {
       ProductID: prodId,
     }).then(res => {
-      setData(prevData => ({
-        ...prevData,
-        prod: res.data
-      }))
+      setProd(res.data)
     }).catch(err => {
       console.log(err)
     }).finally(() => {
-      setData(prevData => ({
-        ...prevData,
-        loading: false
-      }))
+      setLoading(false)
     })
   }, []);
   
@@ -43,20 +35,20 @@ const Product = ({ navigation, route }) => {
   return (
     <SafeAreaView>
       {
-        data.loading ?
+        loading ?
         <Loading /> :
 
         <ScrollView>
           <View style={styles.container}>
-            <Header navigation={navigation} headerType="prod" headerTitle={data.prod.Title.Main} />
-            <ImageSlider navigation={navigation} data={data.prod.ProductImages.Gallery} type="product" cStyles={sliderStyles} pagStyles={pagStyles} />
+            <Header navigation={navigation} headerType="prod" headerTitle={prod.Title.Main} />
+            <ImageSlider navigation={navigation} data={prod.ProductImages.Gallery} type="product" cStyles={sliderStyles} pagStyles={pagStyles} />
 
             <View style={styles.titleContainer}>
               <View style={styles.titleBtns}>
                 <TouchableOpacity><Text style={styles.titleBtn}>&#xf1e0;</Text></TouchableOpacity>
                 <TouchableOpacity><Text style={styles.titleBtn}>&#xf004;</Text></TouchableOpacity>
               </View>
-              <Text style={styles.title}>{data.prod.Title.Main}</Text>
+              <Text style={styles.title}>{prod.Title.Main}</Text>
             </View>
 
             <View style={styles.paddingContainer}>
@@ -87,11 +79,11 @@ const Product = ({ navigation, route }) => {
                   </View>
                 </View>
 
-                <Text style={styles.desc}>{removeHtmlTags(data.prod.Description)}</Text>
+                <Text style={styles.desc}>{removeHtmlTags(prod.Description)}</Text>
 
                 <View style={styles.priceBox}>
-                  <Text style={styles.price}>{data.prod.Prices.PriceUnit}</Text>
-                  <Text style={styles.price}>{data.prod.Prices.NewPrice}</Text>
+                  <Text style={styles.price}>{prod.Prices.PriceUnit}</Text>
+                  <Text style={styles.price}>{prod.Prices.NewPrice}</Text>
                 </View>
 
                 <TouchableOpacity style={styles.addToCartBtn}>

@@ -10,30 +10,26 @@ const elevationVal = 20
 
 const ProductsGroup = ({ navigation }) => {
   const [data, setData] = useState({
-    loading: true,
     menus: [],
     levelOne: [],
     levelOneCurrent: 1
   })
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     axios.post('https://www.shop9.ir/api/shop/Category/GetBy', {
       ParentID: 0,
       SelectType: 4
     }).then(res => {
-      setData(prevData => ({
-        ...prevData,
+      setData({
         menus: res.data,
         levelOne: res.data.filter(el => el.ParentId == null),
         levelOneCurrent: res.data.filter(el => el.ParentId == null)[0].ID
-      }))
+      })
     }).catch(err => {
-      console.log("خطا در دریافت اطلاعات");
+      console.log(err);
     }).finally(() => {
-      setData(prevData => ({
-        ...prevData,
-        loading: false
-      }));
+      setLoading(false);
     })
   }, []);
  
@@ -43,7 +39,7 @@ const ProductsGroup = ({ navigation }) => {
       <>
         <Header style={styles.header} navigation={navigation} headerTitle="دسته بندی محصولات" />
         {
-          data.loading ?
+          loading ?
           <Loading /> :
           <ScrollView>
             <View style={styles.levelOneContainer}>

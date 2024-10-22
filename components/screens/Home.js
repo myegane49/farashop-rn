@@ -12,7 +12,6 @@ import Loading from "../Loading";
 
 const Home = ({ navigation }) => {
   const [data, setData] = useState({
-    loading: true,
     newest: {},
     bags: {},
     slides: [],
@@ -21,6 +20,7 @@ const Home = ({ navigation }) => {
     banner2: {},
     gallery: []
   })
+  const [loading, setLoading] = useState(true)
  
   useEffect(() => {
       axios.post('https://www.shop9.ir/api/shop/App/GetAll', {
@@ -28,8 +28,7 @@ const Home = ({ navigation }) => {
         TagTake: 10,
         CartID: ''
       }).then(res => {
-        setData(prevData => ({
-          ...prevData,
+        setData({
           newest: res.data.DynamicContents.find(el => el.ContentID == 6),
           bags: res.data.DynamicContents.find(el => el.ContentID == 1567),
           slides: res.data.DynamicLinks.Sliders,
@@ -37,14 +36,11 @@ const Home = ({ navigation }) => {
           banner1: res.data.DynamicLinks.Banners.find(el => el.LinkID == 64),
           banner2: res.data.DynamicLinks.Banners.find(el => el.LinkID == 1345),
           gallery: res.data.DynamicLinks.Galleries
-        }))
+        })
       }).catch(err => {
         console.log(err);
       }).finally(() => {
-        setData(prevData => ({
-          ...prevData,
-          loading: false
-        }));
+        setLoading(false);
       })
   }, []);
  
@@ -54,7 +50,7 @@ const Home = ({ navigation }) => {
           <View style={styles.container}>
             <Header navigation={navigation} headerType="main" headerTitle="" />
             {
-              data.loading ?
+              loading ?
               <Loading /> :
               <>
                 <ImageSlider data={data.slides} navigation={navigation} cStyles={sliderStyles} pagStyles={pagStyles} />
